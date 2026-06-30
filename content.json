@@ -1,0 +1,156 @@
+{
+  "hero": {
+    "eyebrow": "Pop · Valparaíso, Chile",
+    "title": "Diego Castillo",
+    "tagline": "Donde la música, el movimiento y los visuales cuentan una sola historia.",
+    "image": "IMG/_SBK1282.jpg",
+    "btnPrimary": "Reservar show",
+    "btnSecondary": "Escuchar"
+  },
+  "stats": [
+    { "value": "4+", "label": "Años en escena" },
+    { "value": "5", "label": "Ciudades recorridas" },
+    { "value": "FIVB", "label": "Mundial Sub-17 · Ago 2026" }
+  ],
+  "nextShow": {
+    "day": "AGO",
+    "year": "2026",
+    "title": "Campeonato Mundial de Vóley Femenino Sub-17",
+    "venue": "San Felipe, Región de Valparaíso",
+    "badge": "Confirmado",
+    "link": "https://mundialsanfelipe2026.cl/es/fanfest"
+  },
+  "shows": [
+    {
+      "day": "AGO",
+      "monthYr": "2026",
+      "name": "Campeonato Mundial FIVB Sub-17",
+      "place": "San Felipe, Valparaíso",
+      "status": "upcoming",
+      "badge": "Confirmado",
+      "badgeClass": "",
+      "ticketLink": ""
+    },
+    {
+      "day": "NOV",
+      "monthYr": "2026",
+      "name": "Tour Teletón 2026",
+      "place": "Región de Valparaíso",
+      "status": "upcoming",
+      "badge": "Por confirmar",
+      "badgeClass": "pending",
+      "ticketLink": ""
+    },
+    {
+      "day": "ABR",
+      "monthYr": "2026",
+      "name": "Festival Violeta al Viento",
+      "place": "Llay-Llay, Valparaíso",
+      "status": "past",
+      "badge": "Pasado",
+      "badgeClass": "past",
+      "ticketLink": ""
+    },
+    {
+      "day": "—",
+      "monthYr": "2025",
+      "name": "Tour Teletón 2025",
+      "place": "Región de Valparaíso",
+      "status": "past",
+      "badge": "Pasado",
+      "badgeClass": "past",
+      "ticketLink": ""
+    },
+    {
+      "day": "ABR",
+      "monthYr": "2024",
+      "name": "Festival Violeta al Viento",
+      "place": "Llay-Llay, Valparaíso",
+      "status": "past",
+      "badge": "Pasado",
+      "badgeClass": "past",
+      "ticketLink": ""
+    },
+    {
+      "day": "—",
+      "monthYr": "2024",
+      "name": "Tour Teletón 2024",
+      "place": "Región de Valparaíso",
+      "status": "past",
+      "badge": "Pasado",
+      "badgeClass": "past",
+      "ticketLink": ""
+    },
+    {
+      "day": "ABR",
+      "monthYr": "2023",
+      "name": "Festival Violeta al Viento",
+      "place": "Llay-Llay, Valparaíso",
+      "status": "past",
+      "badge": "Pasado",
+      "badgeClass": "past",
+      "ticketLink": ""
+    }
+  ],
+  "municipalities": ["Llay-Llay", "Casablanca", "San Felipe"],
+  "music": {
+    "title": "Cool",
+    "type": "Single",
+    "year": "2026",
+    "label": "Último lanzamiento",
+    "cover": "",
+    "spotify": "",
+    "apple": "",
+    "youtube": "https://www.youtube.com/@CSTSS",
+    "untitled": "https://untitled.stream/library/track/0LzlwjMHebSrinFdFvv7A"
+  },
+  "biography": {
+    "lead": "\"La música no es solo sonido — es imagen, movimiento y presencia.\"",
+    "paragraphs": [
+      "Diego Castillo es un artista pop contemporáneo de la Región de Valparaíso, Chile. Influenciado por artistas como Dua Lipa, Adele, RAYE y Jungle, desarrolla una propuesta que combina interpretación vocal, dirección visual y performance en vivo dentro de una identidad artística cuidadosamente construida.",
+      "Desde sus primeras apariciones en el Festival Violeta al Viento (Llay-Llay, 2023, 2024 y 2026), Diego ha construido un lenguaje escénico propio que convierte cada presentación en una experiencia completa para el público.",
+      "Su proceso creativo integra la composición musical, la dirección visual y la puesta en escena como disciplinas inseparables. En 2026 actuará en el Campeonato Mundial Femenino Sub-17 de Vóley (FIVB), en San Felipe."
+    ],
+    "photo": "IMG/_SBK1304.jpg"
+  },
+  "videos": [
+    {
+      "title": "Festival Violeta al Viento 2026",
+      "sub": "Llay-Llay · Abr 2026",
+      "embedUrl": "",
+      "videoFile": "",
+      "featured": true
+    },
+    {
+      "title": "Campeonato Mundial FIVB Sub-17",
+      "sub": "San Felipe · Ago 2026",
+      "embedUrl": "",
+      "videoFile": "",
+      "featured": false
+    }
+  ],
+  "gallery": [
+    { "src": "IMG/IMG_7811.jpg", "alt": "Diego Castillo — Festival Violeta al Viento 2026", "layout": "wide" },
+    { "src": "IMG/DSC06682.jpg", "alt": "Diego Castillo — Festival Violeta al Viento 2026", "layout": "tall" },
+    { "src": "IMG/IMG_7592.jpg", "alt": "Diego Castillo — Gira Teletón 2025", "layout": "normal" },
+    { "src": "IMG/DSC06729.jpg", "alt": "Diego Castillo — Festival Violeta al Viento 2026", "layout": "normal" },
+    { "src": "IMG/IMG_7446.jpg", "alt": "Diego Castillo — Gira Teletón 2025", "layout": "normal" }
+  ],
+  "socials": {
+    "instagram": "https://www.instagram.com/cst8_2",
+    "youtube": "https://www.youtube.com/@CSTSS",
+    "spotify": "",
+    "apple": "",
+    "tiktok": ""
+  },
+  "contact": {
+    "email": "",
+    "phone": "",
+    "manager": "",
+    "formEndpoint": "https://formspree.io/f/xbdvrndp"
+  },
+  "settings": {
+    "maintenanceMode": false,
+    "lastUpdated": "2026-06-28T21:14:00"
+  }
+}

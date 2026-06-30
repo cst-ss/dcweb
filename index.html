@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diego Castillo — Artista Pop · Valparaíso, Chile</title>
+  <meta name="description" content="Diego Castillo es un artista pop contemporáneo de la Región de Valparaíso, Chile. Shows en vivo con música, movimiento y visuales.">
+  <meta property="og:title" content="Diego Castillo — Artista Pop">
+  <meta property="og:description" content="Artista pop contemporáneo de Valparaíso, Chile.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="IMG/og-image.jpg">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav id="nav" role="navigation" aria-label="Navegación principal">
+  <a href="#hero" class="nav-logo" aria-label="Diego Castillo — inicio">
+    Diego <span style="color:var(--gold)">Castillo</span>
+  </a>
+  <ul class="nav-links" role="list">
+    <li><a href="#proximo-show">Próximo show</a></li>
+    <li><a href="#shows">Shows</a></li>
+    <li><a href="#music">Música</a></li>
+    <li><a href="#biography">Biografía</a></li>
+    <li><a href="#press">Prensa</a></li>
+    <li><a href="#booking">Contacto</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Reservar show</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile" id="nav-mobile" role="dialog" aria-label="Menú móvil">
+  <a href="#proximo-show">Próximo show</a>
+  <a href="#shows">Shows</a>
+  <a href="#music">Música</a>
+  <a href="#biography">Biografía</a>
+  <a href="#press">Prensa</a>
+  <a href="#booking">Contacto</a>
+  <a href="#booking" class="nav-cta">Reservar show</a>
+</div>
+
+
+<!-- ============ HERO ============ -->
+<section id="hero" aria-label="Portada">
+  <div class="hero-bg-media">
+    <img id="hero-img" src="IMG/_SBK1282.jpg" alt="Diego Castillo en vivo" loading="eager">
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-line" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow" id="hero-eyebrow">Pop · Valparaíso, Chile</span>
+    <h1 class="hero-name" id="hero-title">
+      <span class="line-accent">Diego</span><br>Castillo
+    </h1>
+    <p class="hero-tagline" id="hero-tagline">
+      Donde la música, el movimiento y los visuales<br>
+      cuentan una sola historia.
+    </p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary" id="hero-btn-primary">Reservar show</a>
+      <a href="#music" class="btn-secondary" id="hero-btn-secondary">Escuchar</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ============ STATS ============ -->
+<div id="stats" role="region" aria-label="Estadísticas">
+  <div class="stat-item">
+    <div class="stat-num">4+</div>
+    <div class="stat-label">Años en escena</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Ciudades recorridas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">FIVB</div>
+    <div class="stat-label">Mundial Sub-17 · Ago 2026</div>
+  </div>
+</div>
+
+
+<!-- ============ PRÓXIMO SHOW — destacado ============ -->
+<section id="proximo-show" aria-label="Próximo show destacado">
+  <div class="next-show-wrap">
+    <div class="next-show-label">
+      <span class="eyebrow" style="margin-bottom:0">Próxima fecha</span>
+    </div>
+    <div class="next-show-main">
+      <div class="next-show-date-block">
+        <div class="next-show-month" id="nextshow-day">AGO</div>
+        <div class="next-show-year" id="nextshow-year">2026</div>
+      </div>
+      <div class="next-show-divider" aria-hidden="true"></div>
+      <div class="next-show-info">
+        <div class="next-show-title" id="nextshow-title">Campeonato Mundial de Vóley Femenino Sub-17</div>
+        <div class="next-show-venue" id="nextshow-venue">San Felipe, Región de Valparaíso</div>
+        <div class="next-show-badge" id="nextshow-badge">Confirmado</div>
+        <a href="https://mundialsanfelipe2026.cl/es/fanfest" class="next-show-badge-buy" id="nextshow-link">Más información</a>
+      </div>
+    </div>
+    <a href="#booking" class="next-show-cta">Reservar show similar</a>
+  </div>
+</section>
+
+
+<!-- ============ SHOWS ============ -->
+<section class="section" id="shows" aria-label="Fechas de shows">
+  <div class="shows-top-bar">
+    <div>
+      <span class="eyebrow">Fechas</span>
+      <h2 class="section-title" style="margin-bottom:0">Shows</h2>
+    </div>
+    <div class="shows-filter-row" role="group" aria-label="Filtrar shows">
+      <button class="shows-filter active" data-filter="all">Todos</button>
+      <button class="shows-filter" data-filter="upcoming">Próximos</button>
+      <button class="shows-filter" data-filter="past">Pasados</button>
+    </div>
+  </div>
+
+  <div class="shows-list" id="shows-list" role="list"></div>
+
+  <!-- Municipalidades -->
+  <div class="municipalities-block">
+    <p class="municipalities-label">Confiado por municipalidades de</p>
+    <div class="municipalities-logos" role="list" aria-label="Municipalidades">
+      <!--
+        LOGOS DE MUNICIPALIDADES:
+        Opción A — Con logo PNG/SVG:
+          <div class="muni-item" role="listitem">
+            <img src="IMG/logo-municipalidad-llay-llay.png" alt="Municipalidad de Llay-Llay">
+          </div>
+        Opción B — Solo texto (activo por defecto):
+      -->
+      <div class="muni-item muni-text" role="listitem">Llay-Llay</div>
+      <div class="muni-item muni-text" role="listitem">Casablanca</div>
+      <div class="muni-item muni-text" role="listitem">San Felipe</div>
+    </div>
+  </div>
+
+  <!-- CTA booking -->
+  <div class="shows-cta-strip">
+    <p class="shows-cta-text">¿Quieres un show como estos en tu ciudad o evento?</p>
+    <a href="#booking" class="shows-cta-btn">Reservar show →</a>
+  </div>
+</section>
+
+<script>
+(function(){
+  // Datos de respaldo — se usan solo si content.json no carga.
+  const fallbackShows = [
+    {day:'AGO', monthYr:'2026', name:'Campeonato Mundial FIVB Sub-17', place:'San Felipe, Valparaíso', status:'upcoming', badge:'Confirmado', badgeClass:''},
+    {day:'NOV', monthYr:'2026', name:'Tour Teletón 2026', place:'Región de Valparaíso', status:'upcoming', badge:'Por confirmar', badgeClass:'pending'},
+    {day:'ABR', monthYr:'2026', name:'Festival Violeta al Viento', place:'Llay-Llay, Valparaíso', status:'past', badge:'Pasado', badgeClass:'past'},
+    {day:'—',   monthYr:'2025', name:'Tour Teletón 2025', place:'Región de Valparaíso', status:'past', badge:'Pasado', badgeClass:'past'},
+    {day:'ABR', monthYr:'2024', name:'Festival Violeta al Viento', place:'Llay-Llay, Valparaíso', status:'past', badge:'Pasado', badgeClass:'past'},
+    {day:'—',   monthYr:'2024', name:'Tour Teletón 2024', place:'Región de Valparaíso', status:'past', badge:'Pasado', badgeClass:'past'},
+    {day:'ABR', monthYr:'2023', name:'Festival Violeta al Viento', place:'Llay-Llay, Valparaíso', status:'past', badge:'Pasado', badgeClass:'past'},
+  ];
+
+  let current = 'all';
+
+  function render() {
+    const shows = window.__shows && window.__shows.length ? window.__shows : fallbackShows;
+    const list = document.getElementById('shows-list');
+    if (!list) return;
+    const filtered = current === 'all' ? shows : shows.filter(s => s.status === current);
+    if (!filtered.length) {
+      list.innerHTML = '<div class="shows-empty">Sin fechas en esta categoría.</div>';
+      return;
+    }
+    list.innerHTML = filtered.map(s => `
+      <div class="show-row ${s.status}" role="listitem" tabindex="0">
+        <div class="show-accent-line" aria-hidden="true"></div>
+        <div class="show-date-block" aria-hidden="true">
+          <div class="show-day">${s.day}</div>
+          <div class="show-month-yr">${s.monthYr}</div>
+        </div>
+        <div class="show-body">
+          <div class="show-name">${s.name}</div>
+          <div class="show-place">${s.place}</div>
+        </div>
+        <div class="show-right">
+          <span class="show-badge ${s.badgeClass || ''}">${s.badge}</span>
+          ${s.ticketLink ? `<a href="${s.ticketLink}" target="_blank" rel="noopener" class="show-arrow" aria-label="Comprar entradas">→</a>` : '<span class="show-arrow" aria-hidden="true">→</span>'}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Exponer globalmente para que content-loader.js pueda re-renderizar
+  // apenas llegue el JSON con los shows reales.
+  window.renderShows = render;
+
+  document.querySelectorAll('.shows-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.shows-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      current = btn.dataset.filter;
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+
+<!-- ============ MUSIC ============ -->
+<section class="section" id="music" aria-label="Música">
+  <span class="eyebrow">Música</span>
+  <h2 class="section-title">Escúchame</h2>
+
+  <!-- LANZAMIENTO DESTACADO -->
+  <div class="release-featured">
+    <div class="release-cover" id="release-cover">
+      <div class="release-cover-placeholder" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#C9A96E" stroke-width="1.5"/><circle cx="24" cy="24" r="6" stroke="#C9A96E" stroke-width="1.5"/><line x1="24" y1="4" x2="24" y2="18" stroke="#C9A96E" stroke-width="1"/></svg>
+      </div>
+    </div>
+    <div class="release-info">
+      <span class="release-type" id="release-label">Último lanzamiento</span>
+      <h3 class="release-title" id="release-title">Cool</h3>
+      <p class="release-meta" id="release-meta">Single · 2026</p>
+      <div class="platforms-grid">
+        <!-- Spotify -->
+        <a href="#" class="platform-btn" id="platform-spotify" target="_blank" rel="noopener" aria-label="Escuchar en Spotify">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.52 17.3c-.22.35-.68.46-1.03.24-2.82-1.73-6.37-2.12-10.55-1.16-.4.09-.8-.16-.89-.56-.09-.4.16-.8.56-.89 4.57-1.04 8.49-.59 11.66 1.34.35.22.46.68.25 1.03zm1.47-3.27c-.27.44-.85.58-1.29.3-3.23-1.98-8.15-2.56-11.97-1.4-.49.15-1.02-.13-1.17-.62-.15-.49.13-1.02.62-1.17 4.36-1.32 9.78-.68 13.5 1.6.44.27.58.85.31 1.29zm.13-3.4C15.6 8.46 9.44 8.24 5.9 9.33c-.59.18-1.22-.15-1.4-.74-.18-.59.15-1.22.74-1.4 4.08-1.24 10.87-1 15.15 1.6.53.31.71 1 .4 1.53-.3.53-.99.71-1.52.41z"/></svg>
+          <span>Spotify</span>
+        </a>
+        <!-- Apple Music -->
+        <a href="#" class="platform-btn" id="platform-apple" target="_blank" rel="noopener" aria-label="Escuchar en Apple Music">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026C4.786.07 4.043.15 3.34.428 2.004.958 1.04 1.88.475 3.208A4.98 4.98 0 00.06 4.94c-.016.23-.02.46-.029.69v13.74c.01.27.017.544.046.814.06.546.188 1.077.425 1.578.54 1.134 1.432 1.89 2.56 2.39.43.19.882.3 1.35.365.55.075 1.1.1 1.654.106.057.003.114.006.17.01h12.62c.31-.01.62-.022.93-.056.55-.061 1.085-.175 1.594-.4 1.272-.56 2.135-1.487 2.6-2.812.14-.4.21-.808.254-1.225.034-.312.05-.626.054-.938.003-.03.007-.056.01-.084V6.86c-.002-.245-.007-.49-.02-.735zm-6.982 5.99l-4.5 2.598c-.33.19-.67.38-1.004.566-.413.228-.826.113-1.04-.28-.13-.24-.135-.497-.137-.756-.007-1.744-.01-3.49-.005-5.235.003-.87.004-1.74 0-2.608-.003-.663.44-1.037 1.043-.832.146.05.283.13.42.21l5.524 3.19c.137.08.268.167.386.27.343.298.37.756.057 1.09-.1.11-.22.2-.344.267z"/></svg>
+          <span>Apple Music</span>
+        </a>
+        <!-- YouTube -->
+        <a href="https://www.youtube.com/@CSTSS" class="platform-btn" id="platform-youtube" target="_blank" rel="noopener" aria-label="Ver en YouTube">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.54 3.5 12 3.5 12 3.5s-7.54 0-9.38.55A3.02 3.02 0 00.5 6.19C0 8.04 0 12 0 12s0 3.96.5 5.81a3.02 3.02 0 002.12 2.14C4.46 20.5 12 20.5 12 20.5s7.54 0 9.38-.55a3.02 3.02 0 002.12-2.14C24 15.96 24 12 24 12s0-3.96-.5-5.81zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+          <span>YouTube</span>
+        </a>
+        <!-- [untitled] -->
+        <a href="https://untitled.stream/library/track/0LzlwjMHebSrinFdFvv7A" class="platform-btn" id="platform-untitled" target="_blank" rel="noopener" aria-label="Escuchar en [untitled]">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="6"/></svg>
+          <span>[untitled]</span>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/cst8_2" class="platform-btn" id="platform-instagram" target="_blank" rel="noopener" aria-label="Instagram @cst8_2">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span>@cst8_2</span>
+        </a>
+        <!-- TikTok -->
+        <a href="#" class="platform-btn platform-soon" id="platform-tiktok" aria-label="Próximamente en TikTok">
+          <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.77a4.85 4.85 0 01-1.02-.08z"/></svg>
+          <span>TikTok</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ============ BIOGRAPHY ============ -->
+<section class="section" id="biography" aria-label="Biografía">
+  <span class="eyebrow">Sobre el artista</span>
+
+  <div class="bio-layout">
+
+    <div class="bio-photo-col">
+      <div class="bio-photo-frame">
+        <!--
+          La imagen se escala automáticamente al contenedor (object-fit: cover).
+          Si tu foto es muy grande, el CSS la recorta correctamente.
+          Reemplaza la ruta por la tuya:
+        -->
+        <img src="IMG/_SBK1304.jpg" alt="Diego Castillo — retrato" id="bio-photo">
+      </div>
+      <p class="bio-photo-caption">Diego Castillo · Región de Valparaíso, Chile</p>
+    </div>
+
+    <div class="bio-text-col">
+      <h2 class="section-title">Diego Castillo</h2>
+
+      <p class="bio-lead" id="bio-lead">
+        "La música no es solo sonido — es imagen, movimiento y presencia."
+      </p>
+
+      <div id="bio-paragraphs">
+      <p class="bio-body">
+        Diego Castillo es un artista pop contemporáneo de la Región de Valparaíso, Chile. Influenciado por artistas como Dua Lipa, Adele, RAYE y Jungle, desarrolla una propuesta que combina interpretación vocal, dirección visual y performance en vivo dentro de una identidad artística cuidadosamente construida. Su trabajo busca conectar la elegancia del pop moderno con la energía de un espectáculo en vivo de gran formato.
+      </p>
+
+      <p class="bio-body">
+        Desde sus primeras apariciones en el Festival Violeta al Viento (Llay-Llay, 2023, 2024 y 2026), Diego ha construido un lenguaje escénico propio que convierte cada presentación en una experiencia completa para el público.
+      </p>
+
+      <p class="bio-body">
+        Su proceso creativo integra la composición musical, la dirección visual y la puesta en escena como disciplinas inseparables, entendiendo el show en vivo como la forma más completa de expresión artística. En 2026 actuará en el Campeonato Mundial Femenino Sub-17 de Vóley (FIVB), en San Felipe, consolidando su presencia en escenarios de alta visibilidad regional y nacional.
+      </p>
+      </div>
+
+      <p class="bio-body">
+        Fuera del escenario, Diego mantiene una activa presencia digital a través de su canal de YouTube
+        <strong style="color:var(--cold-white)">@CSTSS</strong> y su Instagram
+        <strong style="color:var(--cold-white)">@cst8_2</strong>.
+      </p>
+
+      <div class="bio-highlights" role="list" aria-label="Hitos de carrera">
+
+        <div class="highlight-item" role="listitem">
+          <div class="highlight-year">2026</div>
+          <div>
+            <div class="highlight-text">Campeonato Mundial de Vóley Femenino Sub-17</div>
+            <div class="highlight-sub">San Felipe, Valparaíso</div>
+          </div>
+        </div>
+
+        <div class="highlight-item" role="listitem">
+          <div class="highlight-year">2026</div>
+          <div>
+            <div class="highlight-text">Festival Violeta al Viento — tercera edición</div>
+            <div class="highlight-sub">Llay-Llay, Valparaíso</div>
+          </div>
+        </div>
+
+        <div class="highlight-item" role="listitem">
+          <div class="highlight-year">2025</div>
+          <div>
+            <div class="highlight-text">Tour Teletón 2025</div>
+            <div class="highlight-sub">Gira por comunas de la Región de Valparaíso</div>
+          </div>
+        </div>
+
+        <div class="highlight-item" role="listitem">
+          <div class="highlight-year">2024</div>
+          <div>
+            <div class="highlight-text">Festival Violeta al Viento — segunda edición</div>
+            <div class="highlight-sub">Llay-Llay, Valparaíso</div>
+          </div>
+        </div>
+
+        <div class="highlight-item" role="listitem">
+          <div class="highlight-year">2024</div>
+          <div>
+            <div class="highlight-text">Tour Teletón 2024</div>
+            <div class="highlight-sub">Gira por comunas de la Región de Valparaíso</div>
+          </div>
+        </div>
+
+        <div class="highlight-item" role="listitem">
+          <div class="highlight-year">2023</div>
+          <div>
+            <div class="highlight-text">Festival Violeta al Viento — debut en vivo</div>
+            <div class="highlight-sub">Llay-Llay, Valparaíso</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ GALLERY ============ -->
+<section class="section" id="gallery" aria-label="Galería de fotos">
+  <span class="eyebrow">Galería</span>
+  <h2 class="section-title">En imágenes</h2>
+
+  <!--
+    FOTOS: Las imágenes se escalan automáticamente sin importar su tamaño original.
+    Solo reemplaza el src. object-fit: cover se encarga del recorte.
+    
+    Para cambiar qué parte de la foto se ve, usa object-position en el CSS:
+    center (default) | top | bottom | left | right
+  -->
+  <div class="gallery-grid" id="gallery-grid" role="list">
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Visualizador de imagen" aria-modal="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Cerrar">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<!-- ============ VIDEOS ============ -->
+<section class="section" id="videos" aria-label="Videos">
+  <span class="eyebrow">Videos</span>
+  <h2 class="section-title">En vivo</h2>
+
+  <div class="videos-grid" id="videos-grid">
+
+    <!-- Contenido generado dinámicamente por main.js desde content.json.
+         Este bloque queda como respaldo si el JSON falla en cargar. -->
+
+    <div class="video-card">
+      <div class="video-card-inner">
+        <div class="video-placeholder-new" aria-label="Agrega tu video aquí">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="20" stroke="#333" stroke-width="1.5"/><polygon points="19,16 34,24 19,32" fill="#333"/></svg>
+        </div>
+      </div>
+      <div class="video-meta">
+        <div class="video-meta-title">Festival Violeta al Viento 2026</div>
+        <div class="video-meta-sub">Llay-Llay · Abr 2026</div>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="video-card-inner">
+        <div class="video-placeholder-new" aria-label="Agrega tu video aquí">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="24" r="20" stroke="#333" stroke-width="1.5"/><polygon points="19,16 34,24 19,32" fill="#333"/></svg>
+        </div>
+      </div>
+      <div class="video-meta">
+        <div class="video-meta-title">Campeonato Mundial FIVB Sub-17</div>
+        <div class="video-meta-sub">San Felipe · Ago 2026</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============ PRESS ============ -->
+<section class="section" id="press" aria-label="Prensa y apariciones">
+  <span class="eyebrow">Prensa</span>
+  <h2 class="section-title">Cobertura mediática</h2>
+
+  <div class="press-grid">
+
+    <article class="press-card">
+      <div class="press-outlet">La Audacia</div>
+      <p class="press-quote">
+        "Reemplaza esta cita con el texto real del artículo o entrevista."
+      </p>
+      <div class="press-meta">Periodista · Mes 202X</div>
+    </article>
+
+    <article class="press-card">
+      <div class="press-outlet">Medio / Publicación</div>
+      <p class="press-quote">
+        "Segunda cita. Convierte este article en un enlace añadiendo href al elemento."
+      </p>
+      <div class="press-meta">Periodista · Mes 202X</div>
+    </article>
+
+    <article class="press-card">
+      <div class="press-outlet">Medio / Publicación</div>
+      <p class="press-quote">
+        "Tercera mención. Agrega tantas tarjetas como menciones tengas disponibles."
+      </p>
+      <div class="press-meta">Periodista · Mes 202X</div>
+    </article>
+
+  </div>
+
+  <div class="press-logos" aria-label="Medios que han cubierto al artista">
+    <!-- Reemplaza por logos PNG/SVG cuando los tengas -->
+    <span class="press-logo-item">La Audacia</span>
+    <span class="press-logo-item">Agrega medios aquí</span>
+  </div>
+
+  <h3 class="appearances-title">Apariciones</h3>
+
+  <div class="appearances" role="list">
+    <div class="appearance-item" role="listitem">
+      <div class="appearance-name">Festival Violeta al Viento</div>
+      <div class="appearance-year">2026</div>
+    </div>
+    <div class="appearance-item" role="listitem">
+      <div class="appearance-name">Festival Violeta al Viento</div>
+      <div class="appearance-year">2024</div>
+    </div>
+    <div class="appearance-item" role="listitem">
+      <div class="appearance-name">Tour Teletón — Región de Valparaíso</div>
+      <div class="appearance-year">2025</div>
+    </div>
+    <div class="appearance-item" role="listitem">
+      <div class="appearance-name">Tour Teletón — Región de Valparaíso</div>
+      <div class="appearance-year">2024</div>
+    </div>
+    <div class="appearance-item" role="listitem">
+      <div class="appearance-name">Festival Violeta al Viento</div>
+      <div class="appearance-year">2023</div>
+    </div>
+    <div class="appearance-item" role="listitem">
+      <div class="appearance-name">Campeonato Mundial FIVB Sub-17</div>
+      <div class="appearance-year">2026</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ BOOKING ============ -->
+<section class="section" id="booking" aria-label="Reservar a Diego Castillo">
+  <div class="booking-inner">
+    <span class="eyebrow">Contacto</span>
+    <h2 class="section-title">Reserva un show</h2>
+    <p class="booking-desc">
+      Cada presentación es una experiencia inmersiva donde música, movimiento y visuales
+      conviven en un mismo lenguaje. Un espectáculo pop contemporáneo pensado para
+      escenarios, festivales y eventos que quieren dejar huella.
+    </p>
+
+    <div class="booking-types" role="list" aria-label="Tipos de evento">
+      <div class="booking-tag" role="listitem">Festivales</div>
+      <div class="booking-tag" role="listitem">Eventos municipales</div>
+      <div class="booking-tag" role="listitem">Programas culturales</div>
+      <div class="booking-tag" role="listitem">Eventos corporativos</div>
+      <div class="booking-tag" role="listitem">Universidades</div>
+      <div class="booking-tag" role="listitem">Eventos privados</div>
+    </div>
+
+    <!--
+      FORMULARIO → CÓMO RECIBIR LOS MENSAJES:
+      
+      OPCIÓN A — Formspree (gratis, sin backend, recomendado):
+      1. Ve a formspree.io y crea una cuenta gratuita
+      2. Crea un nuevo formulario y copia tu endpoint (algo como https://formspree.io/f/xbdvrndp)
+      3. Reemplaza action="#" por action="https://formspree.io/f/TU_ID"
+      4. Agrega method="POST"
+      5. Recibirás cada mensaje directo a tu correo
+      
+      OPCIÓN B — Netlify Forms (si publicas en Netlify):
+      Agrega data-netlify="true" al form y Netlify captura todo automáticamente.
+      
+      OPCIÓN C — EmailJS (sin backend, más personalizable):
+      Ve a emailjs.com, conecta tu Gmail y llama a emailjs.send() desde main.js
+    -->
+    <form class="booking-form" id="booking-form"
+      action="https://formspree.io/f/xbdvrndp"
+      method="POST"
+      novalidate aria-label="Formulario de reserva">
+
+      <div class="form-group">
+        <label for="f-name">Nombre</label>
+        <input id="f-name" type="text" name="nombre" placeholder="Tu nombre completo" required>
+      </div>
+      <div class="form-group">
+        <label for="f-org">Organización</label>
+        <input id="f-org" type="text" name="organizacion" placeholder="Municipalidad, empresa, festival…" required>
+      </div>
+      <div class="form-group">
+        <label for="f-email">Correo electrónico</label>
+        <input id="f-email" type="email" name="email" placeholder="tu@correo.com" required>
+      </div>
+      <div class="form-group">
+        <label for="f-date">Fecha del evento</label>
+        <input id="f-date" type="date" name="fecha" required>
+      </div>
+      <div class="form-group">
+        <label for="f-type">Tipo de evento</label>
+        <select id="f-type" name="tipo" required>
+          <option value="">Selecciona…</option>
+          <option>Festival</option>
+          <option>Evento municipal</option>
+          <option>Programa cultural</option>
+          <option>Evento corporativo</option>
+          <option>Universidad</option>
+          <option>Evento privado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="f-venue">Lugar y ciudad</label>
+        <input id="f-venue" type="text" name="recinto" placeholder="Nombre del lugar, ciudad">
+      </div>
+      <div class="form-group full">
+        <label for="f-msg">Cuéntame sobre tu evento</label>
+        <textarea id="f-msg" name="mensaje" placeholder="Fecha aproximada, número de personas esperadas, presupuesto disponible y cualquier detalle relevante…"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Enviar solicitud</button>
+    </form>
+
+    <!-- EPK descargable — sin mencionar "rider técnico" -->
+    <div class="booking-downloads">
+      <a href="epk-diego-castillo.pdf" class="download-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"/>
+        </svg>
+        Descargar presentación artística
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ NEWSLETTER ============ -->
+<div id="newsletter" aria-label="Suscribirse a novedades">
+  <h2 class="newsletter-title">Mantente al tanto</h2>
+  <p class="newsletter-sub">Fechas de shows, lanzamientos y novedades directo a tu correo.</p>
+  <form class="newsletter-form" id="newsletter-form"
+    action="https://formspree.io/f/TU_ID_NEWSLETTER"
+    method="POST"
+    aria-label="Formulario de suscripción" novalidate>
+    <label for="nl-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Correo electrónico</label>
+    <input id="nl-email" type="email" name="email" placeholder="tu@correo.com" required>
+    <button type="submit">Suscribirse</button>
+  </form>
+</div>
+
+
+<!-- ============ FOOTER ============ -->
+<footer role="contentinfo">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Diego Castillo</div>
+      <p class="footer-tagline">
+        Artista pop contemporáneo<br>
+        Región de Valparaíso, Chile
+      </p>
+      <div class="socials">
+        <a href="https://www.youtube.com/@CSTSS" id="social-youtube" target="_blank" rel="noopener" aria-label="YouTube @CSTSS">YouTube</a>
+        <a href="https://www.instagram.com/cst8_2" id="social-instagram" target="_blank" rel="noopener" aria-label="Instagram @cst8_2">Instagram</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Ir a</h4>
+      <ul class="footer-links">
+        <li><a href="#shows">Shows</a></li>
+        <li><a href="#music">Música</a></li>
+        <li><a href="#biography">Biografía</a></li>
+        <li><a href="#gallery">Galería</a></li>
+        <li><a href="#press">Prensa</a></li>
+        <li><a href="#booking">Contacto</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <ul class="footer-links">
+        <li><a href="epk-diego-castillo.pdf" download>Presentación artística</a></li>
+        <li><a href="https://www.youtube.com/@CSTSS" target="_blank" rel="noopener">Canal YouTube</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul class="footer-links">
+        <li><a href="#booking">Reservar show</a></li>
+        <li><a href="https://www.instagram.com/cst8_2" target="_blank" rel="noopener">@cst8_2</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Diego Castillo. Todos los derechos reservados.</p>
+    <p>Región de Valparaíso, Chile · @cst8_2</p>
+  </div>
+</footer>
+
+
+<!-- ============ PLAYER BAR ============ -->
+<div id="player-bar" role="region" aria-label="Reproductor de música">
+  <div class="player-info">
+    <div class="player-track" id="player-track">Nuevo Single</div>
+    <div class="player-artist" id="player-artist">Diego Castillo · 2026</div>
+  </div>
+  <div class="player-controls">
+    <button class="ctrl-btn" id="btn-prev" aria-label="Anterior">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="19,20 9,12 19,4"/><rect x="5" y="4" width="2" height="16"/></svg>
+    </button>
+    <button class="play-btn" id="play-btn" aria-label="Reproducir / Pausar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon id="play-icon" points="5,3 19,12 5,21"/></svg>
+    </button>
+    <button class="ctrl-btn" id="btn-next" aria-label="Siguiente">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,4 15,12 5,20"/><rect x="17" y="4" width="2" height="16"/></svg>
+    </button>
+  </div>
+  <div class="player-progress">
+    <span class="time-label" id="player-time">0:00</span>
+    <div class="progress-track" role="slider" aria-label="Progreso" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" tabindex="0">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <span class="time-label" id="player-time-total">0:00</span>
+  </div>
+  <button id="player-close" class="ctrl-btn" aria-label="Cerrar reproductor" style="margin-left:8px">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
+
+<script src="content-loader.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

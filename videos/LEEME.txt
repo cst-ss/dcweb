@@ -1,0 +1,17 @@
+CARPETA VIDEOS — Diego Castillo Sitio Web
+==========================================
+
+Coloca aquí tus archivos de video MP4.
+
+Nombres recomendados:
+  show-violeta-2026.mp4   → Festival Violeta al Viento
+  show-fivb-2026.mp4      → FIVB San Felipe
+
+Para activar un video en el sitio:
+1. Abre index.html
+2. Busca la sección "VIDEOS"
+3. Descomenta el bloque <video> y reemplaza el src
+
+ALTERNATIVA: Usa YouTube embed (más rápido, sin subir archivos):
+  En index.html busca "TU_VIDEO_ID" y reemplaza por el ID de tu video de YouTube
+  Ejemplo: https://youtube.com/watch?v=ABC123  →  ID = ABC123

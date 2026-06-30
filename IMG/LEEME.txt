@@ -1,0 +1,35 @@
+CARPETA IMG — Diego Castillo Sitio Web
+=======================================
+
+Coloca aquí todas tus fotos. Nombres recomendados:
+
+HERO:
+  hero.jpg            → foto principal del hero (mínimo 1920×1080px)
+
+BIOGRAFÍA:
+  bio-portrait.jpg    → retrato vertical (mínimo 800×1067px)
+
+GALERÍA:
+  gallery-1.jpg       → foto principal horizontal (mínimo 1400×875px)
+  gallery-2.jpg       → foto vertical (mínimo 800×1000px)
+  gallery-3.jpg       → foto cuadrada/vertical
+  gallery-4.jpg       → foto cuadrada/vertical
+  gallery-5.jpg       → foto cuadrada/vertical
+
+MÚSICA:
+  cover-cool.jpg      → portada del single "Cool" (mínimo 600×600px)
+
+VIDEOS (thumbnails):
+  thumb-video-1.jpg   → miniatura video 1
+  thumb-video-2.jpg   → miniatura video 2
+
+MUNICIPALIDADES (logos):
+  logo-muni-llay-llay.png
+  logo-muni-casablanca.png
+  logo-muni-san-felipe.png
+
+CONSEJO: Si tus fotos son muy pesadas, usa Cloudinary (gratis):
+  1. cloudinary.com → crear cuenta
+  2. Subir foto
+  3. Copiar URL y agregar: /upload/w_1920,q_auto,f_auto/nombre-foto.jpg
+  4. Pegar esa URL en el src del HTML en vez de IMG/foto.jpg
