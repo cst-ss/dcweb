@@ -61,7 +61,7 @@
       "ticketLink": ""
     },
     {
-      "day": "—",
+      "day": "NOV",
       "monthYr": "2025",
       "name": "Tour Teletón 2025",
       "place": "Región de Valparaíso",
@@ -81,7 +81,7 @@
       "ticketLink": ""
     },
     {
-      "day": "—",
+      "day": "NOV",
       "monthYr": "2024",
       "name": "Tour Teletón 2024",
       "place": "Región de Valparaíso",
@@ -146,12 +146,12 @@
     {
       "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGVI81e_aztNZ0TjGVzccUQgp7YjNZdZ3kDxxBizpXr1NbnNba43xJ7ptf4qC0TKaiWGDDuu7ekzscUr9r91t2VYTRC_qcOB9UQThT-j3FUWU3dk7WuV7I3jaxuiRLdfo9TeE7212wjARgtaZT-V2XveW8WS_7_eQYr6CkPoPj58Q8nGGtZezo3rqbR-pW/s6000/DSC06691.jpg",
       "alt": "Diego Castillo — Festival Violeta al Viento 2026",
-      "layout": "normal"
+      "layout": "wide"
     },
     {
       "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiuH5WQZ_4xK41tR0e68F0zpXzWwpFcgJgYPACqRGI_OQkQtaH-dGbSJ0V6i-zLOjrOoreTXwr0Nzss08Oczm2ErRQ9Ktu_GtiEE4rV2K0_ijC70huC-wztunQXzEpXLp9robrfsIEWov_HVgYSKcADilr0t2QbNg9D3iDGjPdRp4fseZ6KtuJpmCPGmvm/s6000/DSC06712.jpg",
       "alt": "Diego Castillo — Festival Violeta al Viento 2026",
-      "layout": "normal"
+      "layout": "wide"
     },
     {
       "src": "https://lh3.googleusercontent.com/-V1mP3Ly9wSY/akR9ybHzctI/AAAAAAAAEaY/XtAuOpcAcdQPTxrXcnZr2dOodE0rUp12wCK4BGAsYHg/s5184/IMG_7871.jpg",
@@ -184,6 +184,6 @@
   },
   "settings": {
     "maintenanceMode": false,
-    "lastUpdated": "2026-07-01T03:44:29.902Z"
+    "lastUpdated": "2026-07-01T21:49:21.274Z"
   }
 }
