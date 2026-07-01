@@ -8,9 +8,18 @@
     "btnSecondary": "Escuchar"
   },
   "stats": [
-    { "value": "4+", "label": "Años en escena" },
-    { "value": "5", "label": "Ciudades recorridas" },
-    { "value": "FIVB", "label": "Mundial Sub-17 · Ago 2026" }
+    {
+      "value": "4+",
+      "label": "Años en escena"
+    },
+    {
+      "value": "5",
+      "label": "Ciudades recorridas"
+    },
+    {
+      "value": "FIVB",
+      "label": "Mundial Sub-17 · Ago 2026"
+    }
   ],
   "nextShow": {
     "day": "AGO",
@@ -92,12 +101,16 @@
       "ticketLink": ""
     }
   ],
-  "municipalities": ["Llay-Llay", "Casablanca", "San Felipe"],
+  "municipalities": [
+    "Llay-Llay",
+    "Casablanca",
+    "San Felipe"
+  ],
   "music": {
     "title": "Cool",
     "type": "Single",
     "year": "2026",
-    "label": "Último lanzamiento",
+    "label": "Nuevo lanzamiento",
     "cover": "",
     "spotify": "",
     "apple": "",
@@ -130,11 +143,31 @@
     }
   ],
   "gallery": [
-    { "src": "IMG/IMG_7811.jpg", "alt": "Diego Castillo — Festival Violeta al Viento 2026", "layout": "wide" },
-    { "src": "IMG/DSC06682.jpg", "alt": "Diego Castillo — Festival Violeta al Viento 2026", "layout": "tall" },
-    { "src": "IMG/IMG_7592.jpg", "alt": "Diego Castillo — Gira Teletón 2025", "layout": "normal" },
-    { "src": "IMG/DSC06729.jpg", "alt": "Diego Castillo — Festival Violeta al Viento 2026", "layout": "normal" },
-    { "src": "IMG/IMG_7446.jpg", "alt": "Diego Castillo — Gira Teletón 2025", "layout": "normal" }
+    {
+      "src": "IMG/IMG_7811.jpg",
+      "alt": "Diego Castillo — Festival Violeta al Viento 2026",
+      "layout": "wide"
+    },
+    {
+      "src": "IMG/DSC06682.jpg",
+      "alt": "Diego Castillo — Festival Violeta al Viento 2026",
+      "layout": "tall"
+    },
+    {
+      "src": "IMG/IMG_7592.jpg",
+      "alt": "Diego Castillo — Gira Teletón 2025",
+      "layout": "normal"
+    },
+    {
+      "src": "IMG/DSC06729.jpg",
+      "alt": "Diego Castillo — Festival Violeta al Viento 2026",
+      "layout": "normal"
+    },
+    {
+      "src": "IMG/IMG_7446.jpg",
+      "alt": "Diego Castillo — Gira Teletón 2025",
+      "layout": "normal"
+    }
   ],
   "socials": {
     "instagram": "https://www.instagram.com/cst8_2",
@@ -151,6 +184,6 @@
   },
   "settings": {
     "maintenanceMode": false,
-    "lastUpdated": "2026-06-28T21:14:00"
+    "lastUpdated": "2026-07-01T02:30:28.457Z"
   }
 }
