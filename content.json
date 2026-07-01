@@ -3,7 +3,7 @@
     "eyebrow": "Pop · Valparaíso, Chile",
     "title": "Diego Castillo",
     "tagline": "Donde la música, el movimiento y los visuales cuentan una sola historia.",
-    "image": "IMG/_SBK1282.jpg",
+    "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-jjqoYvRXciZ8lO9kfn5nxaNiOL2eiYc9HZxiBJJU8VdyTwr5HC4u2oLkGG2a3mIFKnqBJ_WPYN3k17x21A1NXgTnUY2vYtY38j8UGgYhWy3hJbJZS-EFgmQCqAB8z9WV09_g4w_k8ytJLKNnHEGxlhvfpRIKu1vT1WONMz7gnlBQyZ3XKoGMKcZDnCxt/s5456/_SBK1282.jpg",
     "btnPrimary": "Reservar show",
     "btnSecondary": "Escuchar"
   },
@@ -130,7 +130,7 @@
     {
       "title": "Festival Violeta al Viento 2026",
       "sub": "Llay-Llay · Abr 2026",
-      "embedUrl": "",
+      "embedUrl": "https://youtu.be/-AfyCdk-TPw",
       "videoFile": "",
       "featured": true
     },
@@ -144,29 +144,29 @@
   ],
   "gallery": [
     {
-      "src": "IMG/IMG_7811.jpg",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGVI81e_aztNZ0TjGVzccUQgp7YjNZdZ3kDxxBizpXr1NbnNba43xJ7ptf4qC0TKaiWGDDuu7ekzscUr9r91t2VYTRC_qcOB9UQThT-j3FUWU3dk7WuV7I3jaxuiRLdfo9TeE7212wjARgtaZT-V2XveW8WS_7_eQYr6CkPoPj58Q8nGGtZezo3rqbR-pW/s6000/DSC06691.jpg",
       "alt": "Diego Castillo — Festival Violeta al Viento 2026",
       "layout": "wide"
     },
     {
-      "src": "IMG/DSC06682.jpg",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiuH5WQZ_4xK41tR0e68F0zpXzWwpFcgJgYPACqRGI_OQkQtaH-dGbSJ0V6i-zLOjrOoreTXwr0Nzss08Oczm2ErRQ9Ktu_GtiEE4rV2K0_ijC70huC-wztunQXzEpXLp9robrfsIEWov_HVgYSKcADilr0t2QbNg9D3iDGjPdRp4fseZ6KtuJpmCPGmvm/s6000/DSC06712.jpg",
       "alt": "Diego Castillo — Festival Violeta al Viento 2026",
-      "layout": "tall"
+      "layout": "wide"
     },
     {
-      "src": "IMG/IMG_7592.jpg",
+      "src": "https://lh3.googleusercontent.com/-V1mP3Ly9wSY/akR9ybHzctI/AAAAAAAAEaY/XtAuOpcAcdQPTxrXcnZr2dOodE0rUp12wCK4BGAsYHg/s5184/IMG_7871.jpg",
       "alt": "Diego Castillo — Gira Teletón 2025",
-      "layout": "normal"
+      "layout": "wide"
     },
     {
-      "src": "IMG/DSC06729.jpg",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyXXwYMZbtau_rivtmkMGrUNZTbp9PJ6657LPk5V1jFyJMj9ouDit33DbIszIb9Rkdv1WHP3a_lxaLqAv0Au33ZepbLW5JLTf7Rovx8y97ZbLRJwYnvBCdP2PNaCoh3KqRCtosrpuiUNL2N49sBYjUWix9fkGTP4UM9ybBRMu5Ork7SyctJVuetTV0uvay/s6000/DSC06729.jpg",
       "alt": "Diego Castillo — Festival Violeta al Viento 2026",
-      "layout": "normal"
+      "layout": "wide"
     },
     {
-      "src": "IMG/IMG_7446.jpg",
+      "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEinBg6eOvBAxYz9RSnmhIIuWpTDu-MH22wvB7fdnkXWwZIHKQgpED6uebSAEVQutF_lll3QogGKFME7cs4cXgZSbTIrKy31PIPZwwMV7EAOqC147ZfVz3GGbdcLpE8jRfzDNkjwnWI3ogNRoKRNJ09YLdnshWgMGbB3xAO1nckqEbnRGWJAKd6x2sDMzCKD/s5184/IMG_7484.jpg",
       "alt": "Diego Castillo — Gira Teletón 2025",
-      "layout": "normal"
+      "layout": "wide"
     }
   ],
   "socials": {
@@ -184,6 +184,6 @@
   },
   "settings": {
     "maintenanceMode": false,
-    "lastUpdated": "2026-07-01T02:30:28.457Z"
+    "lastUpdated": "2026-07-01T02:42:24.615Z"
   }
 }
