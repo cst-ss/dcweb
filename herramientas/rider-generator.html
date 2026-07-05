@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Generador de Rider — Diego Castillo</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root{
+    --gold:#c79a3c;
+    --ink:#111111;
+    --paper:#ffffff;
+    --line:#dddddd;
+    --stripe:#f4f4f2;
+    --app-bg:#0d0d0d;
+    --app-panel:#171717;
+    --app-border:#2a2a2a;
+    --app-text:#e9e6df;
+    --app-muted:#8b8b85;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+    background:var(--app-bg);
+    color:var(--app-text);
+  }
+  .app{
+    display:grid;
+    grid-template-columns:380px 1fr;
+    min-height:100vh;
+  }
+  .panel{
+    background:var(--app-panel);
+    border-right:1px solid var(--app-border);
+    padding:24px;
+    overflow-y:auto;
+    max-height:100vh;
+  }
+  .panel h1{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--gold);
+    margin:0 0 4px;
+  }
+  .panel .sub{
+    color:var(--app-muted);
+    font-size:12px;
+    margin:0 0 20px;
+  }
+  .field{margin-bottom:14px;}
+  .field label{
+    display:block;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--app-muted);
+    margin-bottom:5px;
+  }
+  .field input, .field select{
+    width:100%;
+    background:#0d0d0d;
+    border:1px solid var(--app-border);
+    color:var(--app-text);
+    padding:9px 10px;
+    border-radius:6px;
+    font-size:13px;
+  }
+  .field input:focus, .field select:focus{
+    outline:none;
+    border-color:var(--gold);
+  }
+  .divider{
+    border:none;
+    border-top:1px solid var(--app-border);
+    margin:20px 0;
+  }
+  .btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    margin-bottom:10px;
+  }
+  .btn-primary{background:var(--gold); color:#111;}
+  .btn-primary:hover{background:#d9ac4c;}
+  .btn-secondary{background:transparent; color:var(--app-text); border:1px solid var(--app-border);}
+  .btn-secondary:hover{border-color:var(--gold); color:var(--gold);}
+  .saved-list{
+    font-size:12px;
+    max-height:140px;
+    overflow-y:auto;
+    border:1px solid var(--app-border);
+    border-radius:6px;
+  }
+  .saved-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 10px;
+    border-bottom:1px solid var(--app-border);
+  }
+  .saved-item:last-child{border-bottom:none;}
+  .saved-item button{
+    background:none;border:none;color:var(--app-muted);cursor:pointer;font-size:11px;
+  }
+  .saved-item button:hover{color:var(--gold);}
+  .status{
+    font-size:11px;
+    color:var(--app-muted);
+    margin-top:10px;
+    min-height:14px;
+  }
+  .hint{
+    font-size:11px;
+    color:var(--app-muted);
+    line-height:1.5;
+    margin-top:4px;
+  }
+  .preview-wrap{
+    padding:32px;
+    overflow-y:auto;
+    max-height:100vh;
+    display:flex;
+    justify-content:center;
+  }
+  #page{
+    background:var(--paper);
+    color:var(--ink);
+    width:210mm;
+    min-height:297mm;
+    padding:18mm 16mm;
+    box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  }
+  #page[contenteditable="true"]:focus{ outline: 2px dashed var(--gold); outline-offset: 4px; }
+  .r-title{font-size:15px; font-weight:800; letter-spacing:0.08em; margin:0 0 6px;}
+  .r-name{font-size:52px; font-weight:900; letter-spacing:-0.01em; line-height:0.95; margin:0 0 14px; text-transform:uppercase;}
+  .r-name .thin{font-weight:400;}
+  .r-format{color:var(--gold); font-weight:800; font-size:13px; letter-spacing:0.06em; margin:0 0 22px;}
+  table.r-table{width:100%; border-collapse:collapse; font-size:12px; margin-bottom:18px;}
+  table.r-table td, table.r-table th{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+  table.r-table tr:nth-child(even){background:var(--stripe);}
+  table.r-table td:first-child{font-weight:700; width:30%;}
+  h2.r-h{font-size:15px; font-weight:800; letter-spacing:0.02em; border-bottom:2px solid var(--ink); padding-bottom:5px; margin:26px 0 10px;}
+  h3.r-h3{font-size:12.5px; font-weight:700; color:var(--gold); margin:16px 0 6px; text-transform:uppercase; letter-spacing:0.04em;}
+  p.r-p{font-size:12px; line-height:1.55; margin:0 0 10px;}
+  ul.r-list{font-size:12px; line-height:1.55; margin:0 0 10px; padding-left:18px;}
+  .r-note{font-size:11.5px; font-style:italic; color:#444; border-left:3px solid var(--gold); padding:6px 10px; margin:10px 0; background:var(--stripe);}
+  .stageplot{font-family:"Courier New",monospace; font-size:10px; line-height:1.4; background:var(--stripe); border:1px solid var(--line); padding:12px; white-space:pre; margin:10px 0 16px; overflow-x:auto;}
+  .r-footer{margin-top:30px; padding-top:14px; border-top:1px solid var(--line); font-size:11px; color:#555; text-align:center;}
+  .pagebreak{page-break-before:always;}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="panel">
+    <h1>Generador de Rider</h1>
+    <p class="sub">Diego Castillo — herramienta privada</p>
+
+    <div class="field">
+      <label>Formato del show</label>
+      <select id="f-formato">
+        <option value="solo">Solo (con bailarines, sin banda)</option>
+        <option value="banda">Con banda (4 músicos + bailarines)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Recinto / Evento</label>
+      <input id="f-recinto" placeholder="Ej. FanFest San Felipe">
+    </div>
+    <div class="field">
+      <label>Fecha del show</label>
+      <input id="f-fecha" placeholder="Ej. 8 de agosto, 2026">
+    </div>
+    <div class="field">
+      <label>Dirección / Ubicación</label>
+      <input id="f-direccion" placeholder="Ej. Plaza Villa El Descanso, San Felipe">
+    </div>
+    <div class="field">
+      <label>Contacto técnico del recinto</label>
+      <input id="f-contacto-recinto" placeholder="Nombre — cargo">
+    </div>
+    <div class="field">
+      <label>Teléfono contacto recinto</label>
+      <input id="f-tel-recinto" placeholder="+56 9 ...">
+    </div>
+    <div class="field">
+      <label>Espacio escénico confirmado</label>
+      <input id="f-espacio" placeholder="Ej. 9m × 7m, o 'por confirmar'">
+    </div>
+
+    <button class="btn btn-secondary" id="btn-insertar">Insertar datos en el rider →</button>
+    <p class="hint">Rellena los campos y presiona este botón para reemplazar los placeholders del documento. Puedes editar cualquier texto directamente sobre la vista previa. Cambiar el formato reemplaza el documento completo.</p>
+
+    <hr class="divider">
+
+    <button class="btn btn-primary" id="btn-pdf">Generar PDF</button>
+    <button class="btn btn-secondary" id="btn-guardar">Guardar como evento</button>
+
+    <div class="field" style="margin-top:16px;">
+      <label>Eventos guardados</label>
+      <div class="saved-list" id="saved-list"><div class="saved-item"><span style="color:var(--app-muted)">Sin eventos guardados aún</span></div></div>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="preview-wrap">
+    <div id="page" contenteditable="true" spellcheck="false"></div>
+  </div>
+</div>
+
+<div id="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:1000;">
+  <div style="background:var(--app-panel); border:1px solid var(--app-border); border-radius:10px; padding:24px; max-width:340px;">
+    <p style="font-size:13px; line-height:1.5; margin:0 0 18px; color:var(--app-text);">Cambiar el formato reemplaza el documento completo con la plantilla correspondiente. Las ediciones manuales no guardadas se perderán. ¿Continuar?</p>
+    <div style="display:flex; gap:10px;">
+      <button id="modal-cancel" class="btn btn-secondary" style="margin-bottom:0;">Cancelar</button>
+      <button id="modal-confirm" class="btn btn-primary" style="margin-bottom:0;">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+/* ================= TEMPLATE: SOLO ================= */
+const TPL_SOLO = `
+<div class="r-title">RIDER TÉCNICO</div>
+<div class="r-name">DIEGO <span class="thin">CASTILLO</span></div>
+<div class="r-format" id="ph-formato">FORMATO: SOLO (SIN BANDA)</div>
+
+<table class="r-table">
+  <tr><td>Artista</td><td>Diego Castillo Zamora</td></tr>
+  <tr><td>Recinto / Evento</td><td id="ph-recinto">[recinto pendiente]</td></tr>
+  <tr><td>Fecha</td><td id="ph-fecha">[fecha pendiente]</td></tr>
+  <tr><td>Dirección</td><td id="ph-direccion">[dirección pendiente]</td></tr>
+  <tr><td>Tipo de show</td><td>Solista con cuerpo de baile (6 bailarines)</td></tr>
+  <tr><td>Duración estimada</td><td>45 – 60 minutos</td></tr>
+  <tr><td>Género musical</td><td>Pop / Pop contemporáneo</td></tr>
+  <tr><td>Integrantes en gira</td><td>10 personas (artista + staff + bailarines)</td></tr>
+  <tr><td>Contacto técnico (equipo artista)</td><td>Patricio Hernández — Tour Manager / Producción Técnica — +56 9 7262 0735</td></tr>
+  <tr><td>Contacto técnico del recinto</td><td id="ph-contacto-recinto">[contacto pendiente]</td></tr>
+  <tr><td>Teléfono contacto recinto</td><td id="ph-tel-recinto">[teléfono pendiente]</td></tr>
+  <tr><td>Espacio escénico confirmado</td><td id="ph-espacio">[por confirmar con el recinto]</td></tr>
+</table>
+
+<h2 class="r-h">SOBRE DIEGO CASTILLO Y ESTE SHOW</h2>
+<p class="r-p">Diego Castillo Zamora es un artista pop emergente de la Región de Valparaíso, Chile, con experiencia en escenario a través de presentaciones en festivales como el Festival Violeta al Viento. Su proyecto está enfocado en presentaciones en vivo donde cada elemento técnico y artístico cumple una función específica dentro del show.</p>
+<p class="r-p">El show está diseñado como una experiencia escénica sincronizada en la que el audio, la iluminación y los visuales operan como un sistema unificado. El uso de SMPTE timecode como eje de sincronización define el comportamiento de la iluminación programada, los visuales en tiempo real y el playback. Cualquier desconexión en esta cadena afecta directamente la coherencia artística del show.</p>
+<p class="r-p">Se solicita al equipo técnico del recinto comprender y respetar las especificaciones de este rider como condición necesaria para el correcto desarrollo del espectáculo.</p>
+
+<h2 class="r-h">1. EQUIPO EN ESCENARIO</h2>
+<table class="r-table">
+  <tr><th>Integrante</th><th>Rol</th><th>Monitoreo</th><th>Observaciones</th></tr>
+  <tr><td>Diego Castillo</td><td>Voz principal</td><td>IEM inalámbrico</td><td>Audífonos propios / sistema inalámbrico provisto por recinto (Sennheiser EW-D 835-S o Shure SLXD24/SM58)</td></tr>
+  <tr><td>Bailarines (6)</td><td>Cuerpo de baile</td><td>Monitor de piso (wedge)</td><td>Referencia de audio del show — sin click</td></tr>
+  <tr><td>Patricio Hernández</td><td>Tour Manager / FOH / Secuencias</td><td>—</td><td>Interfaz 1 + micrófono talkback</td></tr>
+  <tr><td>Tamara Neumann</td><td>Visualista / Registro</td><td>—</td><td>Visuales en vivo — registro CCTV cerrado</td></tr>
+  <tr><td>Acompañante (3)</td><td>Acompañante del artista</td><td>—</td><td>Acceso backstage — credencial requerida</td></tr>
+</table>
+
+<h2 class="r-h">2. CANALES DE ENTRADA</h2>
+<table class="r-table">
+  <tr><th>Canal</th><th>Fuente</th><th>Observaciones</th></tr>
+  <tr><td>In 1</td><td>Voz principal</td><td>Diego — voz ya procesada</td></tr>
+  <tr><td>In 2 / 3</td><td>Secuencia L/R</td><td>Playback estéreo</td></tr>
+  <tr><td>In 4</td><td>Click / guía</td><td>SOLO monitoreo IEM — NO enviar a PA</td></tr>
+  <tr><td>In 5</td><td>SMPTE timecode</td><td>Señal dedicada a iluminación/visuales — NO enviar a PA</td></tr>
+  <tr><td>In 6</td><td>Talkback FOH</td><td>Comunicación técnica</td></tr>
+</table>
+<div class="r-note">La voz se entrega ya procesada mediante plugins en Interfaz 1. No aplicar efectos adicionales en la consola.</div>
+
+<h2 class="r-h">3. BACKLINE Y EQUIPAMIENTO REQUERIDO</h2>
+<ul class="r-list">
+  <li>Micrófono inalámbrico Sennheiser EW-D 835-S Q1-6 o Shure SLXD24/SM58 L55 (o equivalente)</li>
+  <li>Sistema inalámbrico IEM completo provisto por el recinto (transmisor + receptor), operativo antes del soundcheck</li>
+  <li>2 wedges para bailarines — audio general sin click</li>
+  <li>Cableado XLR: total mínimo estimado 12 a 15 cables balanceados de 3 pines</li>
+</ul>
+
+<h2 class="r-h">4. VISUALES Y PANTALLAS</h2>
+<p class="r-p">Contenido cinematográfico y abstracto, paleta fría controlada (blancos, azules profundos, violetas), sincronizado en tiempo real vía SMPTE timecode. Pantalla LED central como elemento principal (3840×2160 / 4K 16:9), salida HDMI 2.0+ o SDI. Operadora: Tamara Neumann (no delegable al recinto). Software: Resolume Arena/Alley.</p>
+<p class="r-p">Registro CCTV cerrado con mínimo 2 cámaras (frontal y lateral/elevada) — posiciones a coordinar con producción del recinto.</p>
+
+<h2 class="r-h">5. ILUMINACIÓN Y DISEÑO ESCÉNICO</h2>
+<p class="r-p"><strong>Consola:</strong> grandMA3 Command Wing (preferente) o grandMA2 Command Wing. Otras consolas: evaluar con mínimo 72 horas de anticipación.</p>
+<table class="r-table">
+  <tr><th>Equipo</th><th>Cantidad</th><th>Prioridad</th></tr>
+  <tr><td>Cabezales móviles Beam</td><td>8–12</td><td>Esencial</td></tr>
+  <tr><td>Cabezales móviles Wash</td><td>4–6</td><td>Esencial</td></tr>
+  <tr><td>Iluminación frontal blanca</td><td>4–6</td><td>Esencial</td></tr>
+  <tr><td>JDC1 (Strobe/LED híbrido)</td><td>4–6</td><td>Esencial</td></tr>
+  <tr><td>Barras LED</td><td>6–8</td><td>Recomendado</td></tr>
+  <tr><td>Low smoke / hazer</td><td>1</td><td>Esencial</td></tr>
+</table>
+<div class="r-note">Posicionamiento crítico: las pantallas LED deben quedar al lado del sistema de iluminación principal — no detrás de él.</div>
+
+<h2 class="r-h pagebreak">6. PRODUCCIÓN Y LOGÍSTICA</h2>
+<table class="r-table">
+  <tr><td>Ingreso al recinto</td><td>Mínimo 3 horas antes del show</td></tr>
+  <tr><td>Prueba de sonido</td><td>Mínimo 2 a 3 horas — no negociable</td></tr>
+  <tr><td>Espacio escénico mínimo</td><td id="ph-espacio-2">8m × 6m — mínimo absoluto para este formato</td></tr>
+  <tr><td>Efectos especiales</td><td>Low smoke (humo bajo a nivel de piso). Evitar humo convencional o CO₂ directo</td></tr>
+  <tr><td>Acceso al escenario</td><td>Lateral o trasero</td></tr>
+</table>
+<p class="r-p"><strong>Personal técnico requerido del recinto:</strong> 1 operador PA/FOH, 1 operador de monitores, 1 encargado de pantallas/visuales, 1 técnico de iluminación, 1 stagehand.</p>
+
+<h2 class="r-h">7. STAGE PLOT — DISTRIBUCIÓN ESCÉNICA</h2>
+<p class="r-p">Distribución simétrica con el artista como único foco visual. Adaptable desde 8m × 6m hasta 10m × 8m o más.</p>
+<div class="stageplot">UPSTAGE
+┌────────────────────────────────────────────────┐
+│ [PANT+]   [PANTALLA LED CENTRAL]   [PANT+]      │
+│           [LUCES BEAM / JDC1]                   │
+│ [BAI SL]      ZONA DE BAILE      [BAI SR]       │
+│  [BAI]        ★ DIEGO DC         [BAI]          │
+│  [BAI]                           [BAI]          │
+│      [W]        [CAM 1]        [W]              │
+└────────────────────────────────────────────────┘
+DOWNSTAGE / PÚBLICO        [PLAYBACK SL]  [CAM 2]</div>
+
+<h2 class="r-h">8. HOSPITALITY RIDER — BACKSTAGE</h2>
+<p class="r-p">Condiciones pensadas para producción de 10 personas. Opción ideal: camerino individual para Diego (espejo, mesa, corriente) + área separada para staff/bailarines.</p>
+<ul class="r-list">
+  <li>Hidratación: 12 aguas sin gas, 6 isotónicas, 6 sin azúcar, agua caliente disponible</li>
+  <li>Alimentación ligera: frutas, frutos secos, snacks, 10 sándwiches/wraps, toallas (10)</li>
+  <li>Acceso backstage restringido — credenciales para 10 personas</li>
+  <li>1 persona de enlace de producción del recinto durante toda la jornada</li>
+</ul>
+
+<h2 class="r-h">9. NOTAS TÉCNICAS IMPORTANTES</h2>
+<ul class="r-list">
+  <li>La voz se entrega ya procesada → no aplicar efectos adicionales en FOH</li>
+  <li>Timecode y click deben mantenerse aislados — NO enviar a PA bajo ninguna circunstancia</li>
+  <li>El sistema de playback es parte esencial del show y no puede ser omitido</li>
+  <li>IEM: audífonos propios del artista. Sistema inalámbrico completo es responsabilidad del recinto</li>
+</ul>
+
+<h2 class="r-h">10. DECLARACIÓN DE FLEXIBILIDAD</h2>
+<p class="r-p">El equipo de Diego Castillo comprende que las condiciones técnicas pueden variar según el recinto y se mantiene disponible para adaptar el show a las capacidades existentes, siempre mediante coordinación previa.</p>
+<p class="r-p"><strong>Elementos esenciales no negociables:</strong> sincronización SMPTE timecode, monitoreo IEM del artista, procesamiento vocal (Interfaz 1), prueba de sonido mínima de 2 horas, sistema de pantallas compatible.</p>
+
+<div class="r-footer">Agradecemos el compromiso y la disposición de cada equipo técnico y recinto.<br>Patricio Hernández — Tour Manager / +56 9 7262 0735</div>
+`;
+
+/* ================= TEMPLATE: CON BANDA ================= */
+const TPL_BANDA = `
+<div class="r-title">RIDER TÉCNICO</div>
+<div class="r-name">DIEGO <span class="thin">CASTILLO</span></div>
+<div class="r-format" id="ph-formato">FORMATO: SOLISTA CON BANDA (4 MÚSICOS)</div>
+
+<table class="r-table">
+  <tr><td>Artista</td><td>Diego Castillo</td></tr>
+  <tr><td>Recinto / Evento</td><td id="ph-recinto">[recinto pendiente]</td></tr>
+  <tr><td>Fecha</td><td id="ph-fecha">[fecha pendiente]</td></tr>
+  <tr><td>Dirección</td><td id="ph-direccion">[dirección pendiente]</td></tr>
+  <tr><td>Tipo de show</td><td>Solista con banda de apoyo (4 músicos) + cuerpo de baile (6 bailarines)</td></tr>
+  <tr><td>Duración estimada</td><td>45 – 60 minutos</td></tr>
+  <tr><td>Género musical</td><td>Pop / Pop alternativo</td></tr>
+  <tr><td>Integrantes en gira</td><td>10 personas</td></tr>
+  <tr><td>Contacto técnico (equipo artista)</td><td>Patricio Hernández — Tour Manager / Producción Técnica — +56 9 7262 0735</td></tr>
+  <tr><td>Contacto técnico del recinto</td><td id="ph-contacto-recinto">[contacto pendiente]</td></tr>
+  <tr><td>Teléfono contacto recinto</td><td id="ph-tel-recinto">[teléfono pendiente]</td></tr>
+  <tr><td>Espacio escénico confirmado</td><td id="ph-espacio">[por confirmar con el recinto]</td></tr>
+</table>
+
+<h2 class="r-h">SOBRE ESTE SHOW</h2>
+<p class="r-p">El show de Diego Castillo está diseñado como una experiencia escénica sincronizada en la que el audio, la iluminación y los visuales operan como un sistema unificado. Esta integración técnica no es un complemento opcional: es parte constitutiva del lenguaje artístico del espectáculo.</p>
+<p class="r-p">El uso de SMPTE timecode como eje de sincronización define el comportamiento de la iluminación programada, los visuales en tiempo real y el playback multipista. Cualquier desconexión en esta cadena afecta directamente la coherencia artística del show.</p>
+
+<h2 class="r-h">1. EQUIPO EN ESCENARIO</h2>
+<table class="r-table">
+  <tr><th>Integrante</th><th>Rol</th><th>Monitoreo</th><th>Observaciones</th></tr>
+  <tr><td>Diego Castillo</td><td>Voz principal</td><td>In-Ear (IEM)</td><td>Mic. inalámbrico Sennheiser XSW-1 825-B + procesamiento vía Interfaz 1</td></tr>
+  <tr><td>Guitarrista</td><td>Guitarra</td><td>In-Ear (IEM)</td><td>Por confirmar — backline provisto por recinto</td></tr>
+  <tr><td>Bajista</td><td>Bajo</td><td>In-Ear (IEM)</td><td>Por confirmar — backline provisto por recinto</td></tr>
+  <tr><td>Baterista</td><td>Batería</td><td>In-Ear (IEM)</td><td>Por confirmar — backline provisto por recinto</td></tr>
+  <tr><td>Tecladista</td><td>Teclado</td><td>In-Ear (IEM)</td><td>Por confirmar — backline provisto por recinto</td></tr>
+  <tr><td>Bailarines (6)</td><td>Cuerpo de baile</td><td>Monitor de piso</td><td>Referencia de audio del show — sin click</td></tr>
+  <tr><td>Patricio Hernández</td><td>FOH / Producción / Secuencias</td><td>—</td><td>Interfaz 1 + micrófono talkback</td></tr>
+  <tr><td>Antonia Castro</td><td>FOH / Visualista</td><td>—</td><td>Visuales en vivo — registro videográfico</td></tr>
+</table>
+
+<h2 class="r-h">2. CANALES DE ENTRADA</h2>
+<table class="r-table">
+  <tr><th>Ch.</th><th>Fuente</th><th>Mic / DI</th><th>Observaciones</th></tr>
+  <tr><td>1</td><td>Voz principal</td><td>Sennheiser XSW-1 825-B</td><td>Diego — voz ya procesada</td></tr>
+  <tr><td>2</td><td>Guitarra</td><td>DI / mic de ampli</td><td>Canal mono — ampli provisto por recinto</td></tr>
+  <tr><td>3</td><td>Bajo</td><td>DI activo</td><td>Canal mono</td></tr>
+  <tr><td>4</td><td>Bombo (Kick)</td><td>Mic de bombo</td><td>Batería acústica — provista por recinto</td></tr>
+  <tr><td>5</td><td>Caja (Snare)</td><td>Mic de caja</td><td>Batería acústica</td></tr>
+  <tr><td>6</td><td>Hi-Hat</td><td>Overhead / puntual</td><td>Batería acústica</td></tr>
+  <tr><td>7–8</td><td>Overheads L/R</td><td>Par estéreo</td><td>Batería acústica</td></tr>
+  <tr><td>9–10</td><td>Teclado L/R</td><td>DI estéreo</td><td>Señal línea directa</td></tr>
+  <tr><td>11–12</td><td>Secuencia L/R</td><td>DI</td><td>Playback estéreo del show</td></tr>
+  <tr><td>13</td><td>Click / Guía</td><td>DI</td><td>SOLO monitoreo — NO a PA</td></tr>
+  <tr><td>14</td><td>SMPTE timecode</td><td>DI</td><td>Iluminación — NO a PA</td></tr>
+  <tr><td>15</td><td>Talkback FOH</td><td>Micrófono</td><td>Comunicación técnica</td></tr>
+</table>
+<div class="r-note">Se requieren mínimo 6 sistemas IEM inalámbricos independientes en total (artista + 4 músicos + mezcla general).</div>
+
+<h2 class="r-h pagebreak">3. BACKLINE REQUERIDO AL RECINTO</h2>
+<p class="r-p">Todo el backline de la banda debe ser provisto por el recinto. Los músicos no traen equipamiento propio. Se requiere coordinación previa con el equipo técnico para confirmar disponibilidad y especificaciones.</p>
+<ul class="r-list">
+  <li><strong>Guitarra:</strong> amplificador mínimo 50W (Fender, Marshall, Vox o equivalente), 1 XLR/DI activa</li>
+  <li><strong>Bajo:</strong> amplificador mínimo 200W (Ampeg, Hartke, Markbass o equivalente), DI activa</li>
+  <li><strong>Batería:</strong> batería acústica completa (bombo 22", caja 14", 2 toms, floor tom, hi-hat, 2 platillos), hardware completo</li>
+  <li><strong>Teclado:</strong> mínimo 73 teclas con aftertouch (Nord, Yamaha Motif, Roland RD o equivalente), soporte y banqueta, salida estéreo L/R</li>
+</ul>
+
+<h2 class="r-h">4. MONITOREO</h2>
+<table class="r-table">
+  <tr><th>Integrante</th><th>Sistema</th><th>Contenido de mezcla</th></tr>
+  <tr><td>Diego Castillo</td><td>IEM inalámbrico (audífonos propios / Tx-Rx del recinto)</td><td>Voz procesada + secuencias + click</td></tr>
+  <tr><td>Guitarrista</td><td>IEM inalámbrico completo — recinto</td><td>Voz + guitarra + secuencias + click</td></tr>
+  <tr><td>Bajista</td><td>IEM inalámbrico completo — recinto</td><td>Bajo + batería + secuencias + click</td></tr>
+  <tr><td>Baterista</td><td>IEM inalámbrico completo — recinto</td><td>Batería + click + secuencias</td></tr>
+  <tr><td>Tecladista</td><td>IEM inalámbrico completo — recinto</td><td>Teclado + voz + secuencias + click</td></tr>
+  <tr><td>Bailarines (6)</td><td>Monitor de piso — wedge ×2</td><td>Audio general del show (sin click)</td></tr>
+</table>
+
+<h2 class="r-h">5. SECUENCIAS Y PLAYBACK</h2>
+<p class="r-p">Playback multipista sincronizado con la banda en vivo, operado por el equipo técnico del artista desde FOH o lateral de escenario. Entradas: 1 señal estéreo (secuencias), 1 mono (click/guías, solo monitoreo), 1 mono (SMPTE timecode, no a PA).</p>
+
+<h2 class="r-h">6. VISUALES Y PANTALLAS</h2>
+<p class="r-p">Contenido cinematográfico y abstracto en tonos fríos (blancos, azules profundos), sincronizado en tiempo real vía SMPTE timecode. Formato MP4/MOV/ProRes 4K, 16:9, salida HDMI/SDI. Operador: equipo de Diego Castillo (no delegable). Software: Resolume Arena/Alley.</p>
+
+<h2 class="r-h">7. ILUMINACIÓN Y DISEÑO ESCÉNICO</h2>
+<p class="r-p"><strong>Consola:</strong> grandMA3 (preferente) o grandMA2. Otras consolas: evaluar con mínimo 72 horas de anticipación.</p>
+<table class="r-table">
+  <tr><th>Equipo</th><th>Cantidad</th><th>Prioridad</th></tr>
+  <tr><td>Cabezales móviles Beam</td><td>8–12</td><td>Esencial</td></tr>
+  <tr><td>Cabezales móviles Wash</td><td>4–6</td><td>Esencial</td></tr>
+  <tr><td>Iluminación frontal blanca</td><td>4–6</td><td>Esencial</td></tr>
+  <tr><td>Barras LED</td><td>6–8</td><td>Recomendado</td></tr>
+  <tr><td>Cabezales móviles Spot</td><td>4–6</td><td>Recomendado</td></tr>
+  <tr><td>Low smoke / hazer</td><td>1</td><td>Esencial</td></tr>
+</table>
+
+<h2 class="r-h pagebreak">8. PRODUCCIÓN Y LOGÍSTICA</h2>
+<table class="r-table">
+  <tr><td>Ingreso al recinto</td><td>Mínimo 3 horas antes del show</td></tr>
+  <tr><td>Prueba de sonido</td><td>Mínimo 2 a 3 horas — no negociable</td></tr>
+  <tr><td>Espacio escénico (formato reducido)</td><td>8m × 6m — mínimo absoluto</td></tr>
+  <tr><td>Espacio escénico (con banda + baile)</td><td id="ph-espacio-2">10m × 8m o superior — recomendado</td></tr>
+  <tr><td>Acceso al escenario</td><td>Lateral o trasero</td></tr>
+  <tr><td>Efectos especiales</td><td>Low smoke — evitar humo convencional o CO₂ directo sobre músicos y bailarines</td></tr>
+</table>
+<p class="r-p"><strong>Personal técnico requerido del recinto:</strong> 1 operador PA/FOH, 1 operador de monitores, 1 encargado de pantallas/visuales, 1 técnico de iluminación, 1 stagehand (backline).</p>
+
+<h2 class="r-h">9. STAGE PLOT — DISTRIBUCIÓN ESCÉNICA</h2>
+<p class="r-p">Artista en posición central como punto focal, banda contenida en upstage sin competir visualmente, zona de baile como extensión del artista.</p>
+<div class="stageplot">UPSTAGE
+┌─────────────────────────────────────────────┐
+│  [BAJO SL]   [BATERÍA UC]   [GUITARRA SR]   │
+│              [TECLADO UC]                   │
+│  [BAI SL]                       [BAI SR]    │
+│       [BAI]   ★ DIEGO DC   [BAI]            │
+│  [W]                                  [W]   │
+└─────────────────────────────────────────────┘
+DOWNSTAGE / PÚBLICO</div>
+<p class="r-p" style="margin-top:10px;">SL = Stage Left · SR = Stage Right · UC = Upstage Center · DC = Downstage Center</p>
+
+<h2 class="r-h">10. HOSPITALITY RIDER — BACKSTAGE</h2>
+<p class="r-p">Condiciones pensadas para producción de 8 a 10 personas. Camerino principal exclusivo para Diego + área staff/músicos/bailarines con sillas para mínimo 8 personas.</p>
+<ul class="r-list">
+  <li>Hidratación: 12 aguas sin gas, 6 isotónicas, 6 sin azúcar, agua caliente disponible</li>
+  <li>Alimentación ligera: frutas, frutos secos, snacks, 10 sándwiches/wraps, toallas</li>
+  <li>Acceso backstage restringido — credenciales para 10 personas</li>
+</ul>
+
+<h2 class="r-h">11. NOTAS TÉCNICAS IMPORTANTES</h2>
+<ul class="r-list">
+  <li>La voz se entrega ya procesada → no aplicar efectos adicionales en FOH</li>
+  <li>Timecode y click deben mantenerse aislados — NO enviar a PA</li>
+  <li>El playback debe estar sincronizado con la banda — es parte esencial del show</li>
+  <li>Todo el backline de instrumentos es provisto por el recinto — confirmar con 72 horas de anticipación</li>
+</ul>
+
+<h2 class="r-h">12. DECLARACIÓN DE FLEXIBILIDAD</h2>
+<p class="r-p">El equipo de Diego Castillo se mantiene disponible para adaptar el show a las capacidades del recinto, mediante coordinación previa.</p>
+<p class="r-p"><strong>Elementos esenciales no negociables:</strong> sincronización de playback con la banda, monitoreo In-Ear del artista, procesamiento vocal (Interfaz 1), mínimo 6 envíos IEM independientes, backline completo provisto por el recinto.</p>
+
+<div class="r-footer">Agradecemos el compromiso y la disposición de cada equipo técnico y recinto.<br>Patricio Hernández — Tour Manager / +56 9 7262 0735</div>
+`;
+
+const TEMPLATES = { solo: TPL_SOLO, banda: TPL_BANDA };
+let currentFields = {};
+
+function renderTemplate(key, applyFields){
+  $('page').innerHTML = TEMPLATES[key];
+  if(applyFields) applyFieldsToPage();
+}
+
+function applyFieldsToPage(){
+  const f = currentFields;
+  const set = (id, val, fallback) => { const el = $(id); if(el) el.textContent = val || fallback; };
+  const formatoLabel = $('f-formato').value === 'banda' ? 'SOLISTA CON BANDA (4 MÚSICOS)' : 'SOLO (SIN BANDA)';
+  set('ph-formato', 'FORMATO: ' + formatoLabel, 'FORMATO: ' + formatoLabel);
+  set('ph-recinto', f.recinto, '[recinto pendiente]');
+  set('ph-fecha', f.fecha, '[fecha pendiente]');
+  set('ph-direccion', f.direccion, '[dirección pendiente]');
+  set('ph-contacto-recinto', f.contactoRecinto, '[contacto pendiente]');
+  set('ph-tel-recinto', f.telRecinto, '[teléfono pendiente]');
+  set('ph-espacio', f.espacio, '[por confirmar con el recinto]');
+  if(f.espacio){
+    const el2 = $('ph-espacio-2');
+    if(el2) el2.textContent = f.espacio + ' — confirmado con el recinto';
+  }
+}
+
+function readFieldsFromForm(){
+  currentFields = {
+    formato: $('f-formato').value,
+    recinto: $('f-recinto').value,
+    fecha: $('f-fecha').value,
+    direccion: $('f-direccion').value,
+    contactoRecinto: $('f-contacto-recinto').value,
+    telRecinto: $('f-tel-recinto').value,
+    espacio: $('f-espacio').value
+  };
+}
+
+function setStatus(msg){
+  $('status').textContent = msg;
+  setTimeout(()=>{ if($('status').textContent===msg) $('status').textContent=''; }, 3000);
+}
+
+// Initial render
+renderTemplate('solo', false);
+
+let pendingFormatoValue = null;
+let previousFormatoValue = 'solo';
+
+$('f-formato').addEventListener('change', () => {
+  pendingFormatoValue = $('f-formato').value;
+  $('modal-overlay').style.display = 'flex';
+});
+
+$('modal-cancel').addEventListener('click', () => {
+  $('f-formato').value = previousFormatoValue;
+  $('modal-overlay').style.display = 'none';
+  pendingFormatoValue = null;
+});
+
+$('modal-confirm').addEventListener('click', () => {
+  readFieldsFromForm();
+  renderTemplate(pendingFormatoValue, true);
+  previousFormatoValue = pendingFormatoValue;
+  $('modal-overlay').style.display = 'none';
+  setStatus('Plantilla cambiada ✓');
+  pendingFormatoValue = null;
+});
+
+$('btn-insertar').addEventListener('click', () => {
+  readFieldsFromForm();
+  applyFieldsToPage();
+  setStatus('Datos insertados en el rider ✓');
+});
+
+$('btn-pdf').addEventListener('click', () => {
+  const el = $('page');
+  const opt = {
+    margin: 0,
+    filename: 'Rider_Diego_Castillo_' + ($('f-recinto').value || 'evento').replace(/\s+/g,'_') + '.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+  setStatus('Generando PDF...');
+  html2pdf().set(opt).from(el).save().then(()=> setStatus('PDF descargado ✓'));
+});
+
+function refreshSavedList(){
+  const listEl = $('saved-list');
+  const keys = Object.keys(localStorage).filter(k => k.startsWith('rider:'));
+  if(keys.length===0){
+    listEl.innerHTML = '<div class="saved-item"><span style="color:var(--app-muted)">Sin eventos guardados aún</span></div>';
+    return;
+  }
+  listEl.innerHTML = '';
+  keys.forEach(key => {
+    const name = key.replace('rider:','');
+    const row = document.createElement('div');
+    row.className = 'saved-item';
+    const label = document.createElement('span');
+    label.textContent = name;
+    label.style.cursor = 'pointer';
+    label.title = 'Cargar este evento';
+    label.addEventListener('click', () => loadEvent(key));
+    const del = document.createElement('button');
+    del.textContent = 'eliminar';
+    del.addEventListener('click', (e) => { e.stopPropagation(); deleteEvent(key); });
+    row.appendChild(label);
+    row.appendChild(del);
+    listEl.appendChild(row);
+  });
+}
+
+$('btn-guardar').addEventListener('click', () => {
+  const name = $('f-recinto').value.trim();
+  if(!name){
+    setStatus('Escribe el nombre del recinto/evento arriba antes de guardar');
+    $('f-recinto').focus();
+    return;
+  }
+  readFieldsFromForm();
+  const data = { html: $('page').innerHTML, fields: currentFields };
+  try{
+    localStorage.setItem('rider:' + name, JSON.stringify(data));
+    setStatus('Evento "' + name + '" guardado ✓');
+    refreshSavedList();
+  }catch(e){
+    setStatus('Error al guardar (espacio de almacenamiento lleno)');
+  }
+});
+
+function loadEvent(key){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    $('page').innerHTML = data.html;
+    const f = data.fields || {};
+    $('f-formato').value = f.formato || 'solo';
+    $('f-recinto').value = f.recinto || '';
+    $('f-fecha').value = f.fecha || '';
+    $('f-direccion').value = f.direccion || '';
+    $('f-contacto-recinto').value = f.contactoRecinto || '';
+    $('f-tel-recinto').value = f.telRecinto || '';
+    $('f-espacio').value = f.espacio || '';
+    setStatus('Evento cargado ✓');
+  }catch(e){
+    setStatus('Error al cargar');
+  }
+}
+
+function deleteEvent(key){
+  try{
+    localStorage.removeItem(key);
+    setStatus('Eliminado ✓');
+    refreshSavedList();
+  }catch(e){
+    setStatus('Error al eliminar');
+  }
+}
+
+refreshSavedList();
+</script>
+</body>
+</html>

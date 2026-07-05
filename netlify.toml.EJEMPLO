@@ -1,0 +1,24 @@
+# ============================================================
+# EJEMPLO de netlify.toml para un solo sitio (página + calendario)
+# ============================================================
+#
+# Si YA TIENES un netlify.toml en la raíz de tu repo (probable, ya que
+# usas GitHub + Netlify con tu admin panel), NO reemplaces tu archivo.
+# En vez de eso, copia solo estas dos partes dentro de tu netlify.toml
+# existente:
+#
+#   1. La línea `functions = "netlify/functions"` dentro de tu bloque [build]
+#   2. El bloque [[redirects]] de más abajo, agregado al final
+#
+# Si NO tienes netlify.toml todavía, puedes usar este archivo completo
+# tal cual (ajustando "publish" a la carpeta real de tu sitio, ej. "." 
+# si tu index.html está en la raíz, o "public"/"dist" si usas alguna).
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

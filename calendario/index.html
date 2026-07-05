@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendario de Producción — Diego Castillo</title>
+<style>
+  :root{
+    --gold:#c79a3c;
+    --bg:#0d0d0d;
+    --panel:#171717;
+    --border:#2a2a2a;
+    --text:#e9e6df;
+    --muted:#8b8b85;
+    --danger:#c0524a;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--text);}
+  header{padding:24px 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  header h1{font-size:16px; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); margin:0;}
+  header .sub{font-size:12px; color:var(--muted); margin-top:2px;}
+  .wrap{max-width:1100px; margin:0 auto; padding:28px 32px;}
+  .grid{display:grid; grid-template-columns:1.4fr 1fr; gap:24px;}
+  @media (max-width: 860px){ .grid{grid-template-columns:1fr;} }
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:20px; margin-bottom:20px;}
+  .card h2{font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); margin:0 0 16px;}
+  .btn{padding:10px 16px; border:none; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer;}
+  .btn-primary{background:var(--gold); color:#111;}
+  .btn-primary:hover{background:#d9ac4c;}
+  .btn-secondary{background:transparent; color:var(--text); border:1px solid var(--border);}
+  .btn-secondary:hover{border-color:var(--gold); color:var(--gold);}
+  .btn-danger{background:transparent; color:var(--danger); border:1px solid var(--danger); padding:4px 8px; font-size:11px;}
+  input, select, textarea{width:100%; background:#0d0d0d; border:1px solid var(--border); color:var(--text); padding:9px 10px; border-radius:6px; font-size:13px; font-family:inherit;}
+  label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin-bottom:5px; margin-top:12px;}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .event-item{display:flex; justify-content:space-between; align-items:flex-start; padding:12px 0; border-bottom:1px solid var(--border); gap:10px;}
+  .event-item:last-child{border-bottom:none;}
+  .event-date{font-size:11px; color:var(--gold); font-weight:700; min-width:80px;}
+  .event-title{font-size:13px; font-weight:600;}
+  .event-meta{font-size:11px; color:var(--muted); margin-top:2px;}
+  .tag{display:inline-block; font-size:9px; text-transform:uppercase; letter-spacing:0.05em; padding:2px 6px; border-radius:4px; margin-right:6px;}
+  .tag-ensayo{background:#2a3a2a; color:#8fd18f;}
+  .tag-soundcheck{background:#2a2a3a; color:#9a9ad1;}
+  .tag-show{background:#3a2a2a; color:#e08a7d;}
+  .tag-contenido{background:#3a3220; color:var(--gold);}
+  .tag-otro{background:#2a2a2a; color:var(--muted);}
+  .status{font-size:12px; color:var(--muted); margin-top:10px; min-height:16px;}
+  .ics-box{background:#0d0d0d; border:1px solid var(--border); border-radius:6px; padding:10px; font-size:11px; word-break:break-all; color:var(--muted); margin:10px 0;}
+  #gate{position:fixed; inset:0; background:#0d0d0d; display:flex; align-items:center; justify-content:center; z-index:999;}
+  #gate .box{width:320px;}
+  #ideas-output{white-space:pre-wrap; font-size:12.5px; line-height:1.6; background:#0d0d0d; border:1px solid var(--border); border-radius:6px; padding:14px; margin-top:14px; display:none;}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="card box">
+    <h2>Acceso del equipo</h2>
+    <p style="font-size:12px; color:var(--muted); margin-top:0;">Ver el calendario es público. Para agregar o editar eventos, ingresa la contraseña de equipo que Diego les compartió.</p>
+    <label>Contraseña (solo para editar — puedes omitir para solo ver)</label>
+    <input type="password" id="gate-password" placeholder="Contraseña de equipo">
+    <button class="btn btn-primary" style="width:100%; margin-top:14px;" id="gate-enter">Entrar</button>
+    <div class="status" id="gate-status"></div>
+  </div>
+</div>
+
+<header>
+  <div>
+    <h1>Calendario de Producción</h1>
+    <div class="sub">Diego Castillo — ensayos, pruebas de sonido, shows y contenido</div>
+  </div>
+  <button class="btn btn-secondary" id="btn-settings">⚙ Configuración del feed .ics</button>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h2>Próximos eventos</h2>
+        <div id="event-list"><p style="color:var(--muted); font-size:12px;">Cargando...</p></div>
+      </div>
+
+      <div class="card">
+        <h2>Agregar evento</h2>
+        <label>Título</label>
+        <input id="ev-title" placeholder="Ej. Ensayo de coreografía">
+        <div class="row2">
+          <div>
+            <label>Tipo</label>
+            <select id="ev-type">
+              <option value="ensayo">Ensayo</option>
+              <option value="soundcheck">Prueba de sonido</option>
+              <option value="show">Show</option>
+              <option value="contenido">Contenido / grabación</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div>
+            <label>Fecha</label>
+            <input type="date" id="ev-date">
+          </div>
+        </div>
+        <div class="row2">
+          <div>
+            <label>Hora inicio</label>
+            <input type="time" id="ev-start">
+          </div>
+          <div>
+            <label>Hora fin</label>
+            <input type="time" id="ev-end">
+          </div>
+        </div>
+        <label>Lugar</label>
+        <input id="ev-location" placeholder="Ej. Sala de ensayo, San Felipe">
+        <label>Notas</label>
+        <textarea id="ev-notes" rows="2" placeholder="Detalles para el equipo"></textarea>
+        <button class="btn btn-primary" style="margin-top:16px;" id="btn-add-event">Agregar al calendario</button>
+        <div class="status" id="event-status"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>Ideas de contenido (IA)</h2>
+        <p style="font-size:12px; color:var(--muted); margin-top:0;">Genera ideas de contenido y fechas sugeridas de ensayo/soundcheck, coordinadas con tus eventos ya agendados.</p>
+        <label>Algo puntual que quieras que considere (opcional)</label>
+        <textarea id="ideas-note" rows="2" placeholder="Ej. Quiero enfocarme en contenido detrás de cámaras del show del 8 de agosto"></textarea>
+        <button class="btn btn-primary" style="margin-top:12px;" id="btn-ideas">Generar ideas</button>
+        <div class="status" id="ideas-status"></div>
+        <div id="ideas-output"></div>
+      </div>
+
+      <div class="card" id="settings-card" style="display:none;">
+        <h2>Suscribir en Apple / Google Calendar</h2>
+        <p style="font-size:12px; color:var(--muted); margin-top:0;">Pega aquí el link de tu feed .ics (te lo doy al configurar Netlify) para tenerlo a mano y copiarlo.</p>
+        <label>Link del feed .ics</label>
+        <input id="ics-url" placeholder="https://tu-sitio.netlify.app/.netlify/functions/ics?key=...">
+        <button class="btn btn-secondary" style="margin-top:10px;" id="btn-save-ics">Guardar link</button>
+        <div class="ics-box" id="ics-display" style="display:none;"></div>
+        <button class="btn btn-secondary" id="btn-copy-ics" style="display:none; margin-top:8px;">Copiar link</button>
+        <p style="font-size:11px; color:var(--muted); margin-top:14px;">
+          <strong>Apple Calendar:</strong> Archivo → Nueva suscripción de calendario → pega el link.<br><br>
+          <strong>Google Calendar:</strong> Otros calendarios (+) → Desde URL → pega el link.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const TYPE_LABELS = { ensayo: 'Ensayo', soundcheck: 'Prueba de sonido', show: 'Show', contenido: 'Contenido', otro: 'Otro' };
+
+function getPassword(){ return localStorage.getItem('diego-cal-password') || ''; }
+function setStatus(id, msg){ $(id).textContent = msg; setTimeout(()=>{ if($(id).textContent===msg) $(id).textContent=''; }, 4000); }
+
+// ---------- Gate ----------
+$('gate-enter').addEventListener('click', () => {
+  const pw = $('gate-password').value;
+  if(pw) localStorage.setItem('diego-cal-password', pw);
+  $('gate').style.display = 'none';
+});
+
+// ---------- Settings (.ics link storage, just for convenience) ----------
+$('btn-settings').addEventListener('click', () => {
+  const card = $('settings-card');
+  card.style.display = card.style.display === 'none' ? 'block' : 'none';
+});
+
+function renderIcsDisplay(){
+  const url = localStorage.getItem('diego-cal-ics-url');
+  if(url){
+    $('ics-display').style.display = 'block';
+    $('ics-display').textContent = url;
+    $('btn-copy-ics').style.display = 'inline-block';
+    $('ics-url').value = url;
+  }
+}
+$('btn-save-ics').addEventListener('click', () => {
+  const url = $('ics-url').value.trim();
+  if(!url) return;
+  localStorage.setItem('diego-cal-ics-url', url);
+  renderIcsDisplay();
+});
+$('btn-copy-ics').addEventListener('click', () => {
+  navigator.clipboard.writeText(localStorage.getItem('diego-cal-ics-url') || '');
+  setStatus('event-status', 'Link copiado ✓');
+});
+renderIcsDisplay();
+
+// ---------- Events ----------
+async function loadEvents(){
+  $('event-list').innerHTML = '<p style="color:var(--muted); font-size:12px;">Cargando...</p>';
+  try{
+    const res = await fetch('/api/events');
+    const data = await res.json();
+    renderEvents(data.events || []);
+  }catch(e){
+    $('event-list').innerHTML = '<p style="color:var(--muted); font-size:12px;">No se pudieron cargar los eventos. ¿El sitio ya está desplegado en Netlify con las variables de entorno configuradas?</p>';
+  }
+}
+
+function renderEvents(events){
+  const sorted = [...events].sort((a,b) => (a.date||'').localeCompare(b.date||''));
+  if(sorted.length === 0){
+    $('event-list').innerHTML = '<p style="color:var(--muted); font-size:12px;">No hay eventos agendados todavía.</p>';
+    return;
+  }
+  $('event-list').innerHTML = '';
+  sorted.forEach(ev => {
+    const row = document.createElement('div');
+    row.className = 'event-item';
+    row.innerHTML = `
+      <div>
+        <div class="event-date">${ev.date || ''} ${ev.startTime || ''}</div>
+        <div class="event-title"><span class="tag tag-${ev.type}">${TYPE_LABELS[ev.type] || ev.type}</span>${ev.title || ''}</div>
+        <div class="event-meta">${ev.location ? '📍 ' + ev.location : ''} ${ev.notes ? '· ' + ev.notes : ''}</div>
+      </div>
+      <button class="btn-danger" data-id="${ev.id}">eliminar</button>
+    `;
+    row.querySelector('button').addEventListener('click', () => deleteEvent(ev.id));
+    $('event-list').appendChild(row);
+  });
+}
+
+$('btn-add-event').addEventListener('click', async () => {
+  const newEvent = {
+    title: $('ev-title').value,
+    type: $('ev-type').value,
+    date: $('ev-date').value,
+    startTime: $('ev-start').value,
+    endTime: $('ev-end').value,
+    location: $('ev-location').value,
+    notes: $('ev-notes').value,
+  };
+  if(!newEvent.title || !newEvent.date){
+    setStatus('event-status', 'Falta título o fecha');
+    return;
+  }
+  setStatus('event-status', 'Guardando...');
+  try{
+    const res = await fetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-App-Password': getPassword() },
+      body: JSON.stringify({ action: 'create', newEvent }),
+    });
+    const data = await res.json();
+    if(!res.ok){ setStatus('event-status', data.error || 'Error al guardar'); return; }
+    renderEvents(data.events);
+    ['ev-title','ev-date','ev-start','ev-end','ev-location','ev-notes'].forEach(id => $(id).value = '');
+    setStatus('event-status', 'Evento agregado ✓');
+  }catch(e){
+    setStatus('event-status', 'Error de conexión');
+  }
+});
+
+async function deleteEvent(id){
+  try{
+    const res = await fetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-App-Password': getPassword() },
+      body: JSON.stringify({ action: 'delete', id }),
+    });
+    const data = await res.json();
+    if(!res.ok){ setStatus('event-status', data.error || 'Error al eliminar'); return; }
+    renderEvents(data.events);
+  }catch(e){
+    setStatus('event-status', 'Error de conexión');
+  }
+}
+
+// ---------- Ideas (IA) ----------
+$('btn-ideas').addEventListener('click', async () => {
+  setStatus('ideas-status', 'Generando ideas...');
+  $('ideas-output').style.display = 'none';
+  try{
+    const res = await fetch('/api/ideas', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-App-Password': getPassword() },
+      body: JSON.stringify({ userNote: $('ideas-note').value }),
+    });
+    const data = await res.json();
+    if(!res.ok){ setStatus('ideas-status', data.error || 'Error al generar ideas'); return; }
+    $('ideas-output').style.display = 'block';
+    $('ideas-output').textContent = data.ideas;
+    setStatus('ideas-status', 'Listo ✓');
+  }catch(e){
+    setStatus('ideas-status', 'Error de conexión');
+  }
+});
+
+loadEvents();
+</script>
+</body>
+</html>

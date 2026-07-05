@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Generador de Dossier — Diego Castillo</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root{
+    --gold:#c79a3c;
+    --ink:#111111;
+    --paper:#0b0b0b;
+    --paper-text:#f1efe9;
+    --line:#333333;
+    --stripe:#161616;
+    --app-bg:#0d0d0d;
+    --app-panel:#171717;
+    --app-border:#2a2a2a;
+    --app-text:#e9e6df;
+    --app-muted:#8b8b85;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif; background:var(--app-bg); color:var(--app-text);}
+  .app{display:grid; grid-template-columns:380px 1fr; min-height:100vh;}
+  .panel{background:var(--app-panel); border-right:1px solid var(--app-border); padding:24px; overflow-y:auto; max-height:100vh;}
+  .panel h1{font-size:13px; text-transform:uppercase; letter-spacing:0.12em; color:var(--gold); margin:0 0 4px;}
+  .panel .sub{color:var(--app-muted); font-size:12px; margin:0 0 20px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--app-muted); margin-bottom:5px;}
+  .field input, .field select{width:100%; background:#0d0d0d; border:1px solid var(--app-border); color:var(--app-text); padding:9px 10px; border-radius:6px; font-size:13px;}
+  .field input:focus, .field select:focus{outline:none; border-color:var(--gold);}
+  .divider{border:none; border-top:1px solid var(--app-border); margin:20px 0;}
+  .btn{width:100%; padding:12px; border:none; border-radius:6px; font-size:13px; font-weight:600; letter-spacing:0.02em; cursor:pointer; margin-bottom:10px;}
+  .btn-primary{background:var(--gold); color:#111;}
+  .btn-primary:hover{background:#d9ac4c;}
+  .btn-secondary{background:transparent; color:var(--app-text); border:1px solid var(--app-border);}
+  .btn-secondary:hover{border-color:var(--gold); color:var(--gold);}
+  .saved-list{font-size:12px; max-height:140px; overflow-y:auto; border:1px solid var(--app-border); border-radius:6px;}
+  .saved-item{display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border-bottom:1px solid var(--app-border);}
+  .saved-item:last-child{border-bottom:none;}
+  .saved-item button{background:none;border:none;color:var(--app-muted);cursor:pointer;font-size:11px;}
+  .saved-item button:hover{color:var(--gold);}
+  .status{font-size:11px; color:var(--app-muted); margin-top:10px; min-height:14px;}
+  .hint{font-size:11px; color:var(--app-muted); line-height:1.5; margin-top:4px;}
+  .preview-wrap{padding:32px; overflow-y:auto; max-height:100vh; display:flex; justify-content:center;}
+
+  #page{background:var(--paper); color:var(--paper-text); width:210mm; min-height:297mm; box-shadow:0 10px 40px rgba(0,0,0,0.6);}
+  #page[contenteditable="true"]:focus{ outline: 2px dashed var(--gold); outline-offset: 4px; }
+  .sheet{padding:20mm 16mm;}
+  .pagebreak{page-break-before:always;}
+
+  /* Cover */
+  .cover{height:277mm; display:flex; flex-direction:column; justify-content:space-between; padding:20mm 16mm; position:relative; background:linear-gradient(160deg,#000 0%, #0d0d0d 55%, #1a1400 100%);}
+  .cover-eyebrow{color:var(--gold); font-size:12px; letter-spacing:0.2em; text-transform:uppercase; font-weight:700;}
+  .cover-name{font-size:64px; font-weight:900; text-transform:uppercase; line-height:0.95; margin:14px 0 8px;}
+  .cover-name .thin{font-weight:300;}
+  .cover-tagline{font-size:14px; color:#cfcac0; max-width:80%; line-height:1.5;}
+  .cover-footer{display:flex; justify-content:space-between; align-items:flex-end; font-size:11px; color:#9a958c; border-top:1px solid #333; padding-top:14px;}
+  .cover-footer strong{color:var(--gold);}
+
+  h2.d-h{font-size:12px; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold); font-weight:800; margin:0 0 16px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  h3.d-h3{font-size:16px; font-weight:800; margin:0 0 8px;}
+  p.d-p{font-size:12.5px; line-height:1.7; color:#d8d4cc; margin:0 0 12px;}
+  .d-grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .d-card{background:var(--stripe); border:1px solid var(--line); border-radius:8px; padding:16px;}
+  .d-card .label{font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--gold); margin-bottom:6px;}
+  .d-card .value{font-size:13px; color:#f1efe9; font-weight:600;}
+  ul.d-list{font-size:12.5px; line-height:1.7; color:#d8d4cc; margin:0 0 14px; padding-left:18px;}
+  table.d-table{width:100%; border-collapse:collapse; font-size:12px; margin-bottom:16px;}
+  table.d-table td, table.d-table th{border:1px solid var(--line); padding:10px 12px; text-align:left; color:#e9e6df;}
+  table.d-table th{background:var(--stripe); color:var(--gold); text-transform:uppercase; font-size:10.5px; letter-spacing:0.06em;}
+  .price-row td:last-child{font-weight:800; color:var(--gold); font-size:14px;}
+  .photo-box{width:100%; aspect-ratio:16/10; background:var(--stripe); border:1px dashed var(--app-border); border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden; cursor:pointer; margin-bottom:14px;}
+  .photo-box img{width:100%; height:100%; object-fit:cover;}
+  .photo-box .placeholder{font-size:11px; color:var(--app-muted); text-align:center;}
+  .contact-strip{display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:16px; border-top:1px solid var(--line); font-size:11px; color:#9a958c;}
+  .contact-strip strong{color:var(--paper-text);}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="panel">
+    <h1>Generador de Dossier</h1>
+    <p class="sub">Diego Castillo — pitch para municipalidades / productoras</p>
+
+    <div class="field">
+      <label>Formato a proponer</label>
+      <select id="f-formato">
+        <option value="ambos">Mostrar ambos (Solo y Con banda)</option>
+        <option value="solo">Solo (con bailarines)</option>
+        <option value="banda">Con banda</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Destinatario (Municipalidad / Productora)</label>
+      <input id="f-destinatario" placeholder="Ej. Municipalidad de San Felipe">
+    </div>
+    <div class="field">
+      <label>Contacto en destinatario</label>
+      <input id="f-contacto" placeholder="Nombre — cargo">
+    </div>
+    <div class="field">
+      <label>Evento / fecha propuesta</label>
+      <input id="f-evento" placeholder="Ej. FanFest Mundial U17 — 8 agosto 2026">
+    </div>
+    <div class="field">
+      <label>Precio formato Solo (CLP)</label>
+      <input id="f-precio-solo" placeholder="Ej. $800.000">
+    </div>
+    <div class="field">
+      <label>Precio formato Con Banda (CLP)</label>
+      <input id="f-precio-banda" placeholder="Ej. $1.400.000">
+    </div>
+
+    <button class="btn btn-secondary" id="btn-insertar">Insertar datos en el dossier →</button>
+    <p class="hint">Haz clic en las fotos del documento para subir tus propias imágenes. Todo el texto es editable directamente.</p>
+
+    <hr class="divider">
+
+    <button class="btn btn-primary" id="btn-pdf">Generar PDF</button>
+    <button class="btn btn-secondary" id="btn-guardar">Guardar como cotización</button>
+
+    <div class="field" style="margin-top:16px;">
+      <label>Cotizaciones guardadas</label>
+      <div class="saved-list" id="saved-list"><div class="saved-item"><span style="color:var(--app-muted)">Sin cotizaciones guardadas aún</span></div></div>
+    </div>
+
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="preview-wrap">
+    <div id="page" contenteditable="true" spellcheck="false">
+
+      <!-- ===== COVER ===== -->
+      <div class="cover">
+        <div>
+          <div class="cover-eyebrow">Dossier de Presentación</div>
+          <div class="cover-name">DIEGO <span class="thin">CASTILLO</span></div>
+          <div class="cover-tagline">Pop contemporáneo · producción escénica integral · experiencia en eventos institucionales de gran escala</div>
+        </div>
+        <div class="photo-box" onclick="triggerUpload('cover-photo')" id="cover-photo-box">
+          <div class="placeholder">Haz clic para subir foto de portada<br>(recomendado: horizontal, buena resolución)</div>
+        </div>
+        <div class="cover-footer">
+          <div>Propuesta para <strong id="ph-destinatario">[destinatario pendiente]</strong><br><span id="ph-evento">[evento pendiente]</span></div>
+          <div>Contacto: Patricio Hernández — Tour Manager<br>+56 9 7262 0735</div>
+        </div>
+      </div>
+
+      <!-- ===== SOBRE EL ARTISTA ===== -->
+      <div class="sheet">
+        <h2 class="d-h">Sobre el Artista</h2>
+        <div class="d-grid2" style="margin-bottom:18px;">
+          <div>
+            <h3 class="d-h3">Diego Castillo Zamora</h3>
+            <p class="d-p">Artista pop emergente de la Región de Valparaíso, Chile. Su proyecto integra voz en vivo, dirección visual y producción escénica como un sistema unificado — no como elementos separados. Referencias artísticas: Dua Lipa, Adele, RAYE y Jungle, con una estética que combina pop contemporáneo y soul moderno.</p>
+            <p class="d-p">Cada presentación está diseñada con el mismo nivel de exigencia técnica que una producción internacional: sincronización SMPTE timecode, diseño de iluminación cinematográfico y contenido visual propio.</p>
+          </div>
+          <div class="photo-box" onclick="triggerUpload('artist-photo')" id="artist-photo-box">
+            <div class="placeholder">Foto del artista<br>(retrato o en escena)</div>
+          </div>
+        </div>
+
+        <div class="d-grid2">
+          <div class="d-card"><div class="label">Género</div><div class="value">Pop / Pop contemporáneo</div></div>
+          <div class="d-card"><div class="label">Duración del show</div><div class="value">45 – 60 minutos</div></div>
+          <div class="d-card"><div class="label">Redes</div><div class="value">@cst8_2 (IG) · @CSTSS (YT)</div></div>
+          <div class="d-card"><div class="label">Equipo en gira</div><div class="value">Hasta 10 personas</div></div>
+        </div>
+      </div>
+
+      <!-- ===== TRAYECTORIA ===== -->
+      <div class="sheet pagebreak">
+        <h2 class="d-h">Trayectoria</h2>
+        <ul class="d-list">
+          <li><strong>Festival Violeta al Viento</strong> — Llay-Llay (presentaciones 2023–2026)</li>
+          <li><strong>Teletón</strong> — presentaciones regionales</li>
+          <li><strong>Mundial FIVB U17 Femenino de Voleibol 2026</strong> — presentación confirmada dentro de la programación oficial del FanFest</li>
+        </ul>
+        <p class="d-p">Diego combina su carrera artística con seis años de liderazgo estudiantil (dos como presidente del centro de estudiantes de Publicidad, PUCV), lo que se refleja en su capacidad de coordinar producciones complejas con múltiples equipos técnicos y stakeholders institucionales.</p>
+
+        <h2 class="d-h" style="margin-top:28px;">Propuesta Escénica</h2>
+        <p class="d-p">El show está construido como una experiencia audiovisual sincronizada: audio, iluminación y visuales operan bajo un mismo eje de tiempo (SMPTE timecode). El lenguaje visual es cinematográfico y minimalista — paleta fría (blancos, azules profundos, violetas), beam lights como firma visual y contenido audiovisual propio diseñado específicamente para cada show.</p>
+        <div class="photo-box" onclick="triggerUpload('show-photo')" id="show-photo-box">
+          <div class="placeholder">Foto de show / iluminación en vivo</div>
+        </div>
+      </div>
+
+      <!-- ===== FORMATOS Y COTIZACIÓN ===== -->
+      <div class="sheet pagebreak">
+        <h2 class="d-h">Formatos Disponibles</h2>
+        <table class="d-table" id="tabla-formatos">
+          <tr><th>Formato</th><th>Incluye</th><th>Inversión</th></tr>
+          <tr class="row-solo">
+            <td><strong>Solo</strong><br><span style="color:#9a958c; font-size:11px;">Con cuerpo de baile</span></td>
+            <td>Diego Castillo + 6 bailarines + producción audiovisual completa (iluminación, visuales, playback sincronizado)</td>
+            <td id="ph-precio-solo">[precio pendiente]</td>
+          </tr>
+          <tr class="row-banda">
+            <td><strong>Con Banda</strong><br><span style="color:#9a958c; font-size:11px;">4 músicos + bailarines</span></td>
+            <td>Diego Castillo + banda en vivo (guitarra, bajo, batería, teclado) + 6 bailarines + producción audiovisual completa</td>
+            <td id="ph-precio-banda">[precio pendiente]</td>
+          </tr>
+        </table>
+        <p class="d-p" style="font-size:11px; color:#9a958c;">Ambos formatos incluyen coordinación técnica previa, rider técnico detallado y equipo de producción propio (tour manager, visualista). Valores sujetos a confirmación de disponibilidad y condiciones del recinto.</p>
+
+        <h2 class="d-h" style="margin-top:26px;">Equipo de Trabajo</h2>
+        <div class="d-grid2">
+          <div class="d-card"><div class="label">Tour Manager / FOH</div><div class="value">Patricio Hernández</div></div>
+          <div class="d-card"><div class="label">Visualista</div><div class="value">Antonia Castro</div></div>
+        </div>
+
+        <div class="contact-strip">
+          <div>Propuesta preparada para <strong id="ph-destinatario-2">[destinatario pendiente]</strong> — Contacto: <strong id="ph-contacto">[contacto pendiente]</strong></div>
+          <div><strong>+56 9 7262 0735</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<input type="file" id="file-input" accept="image/*" style="display:none;">
+
+<script>
+const $ = id => document.getElementById(id);
+let uploadTargetId = null;
+
+function triggerUpload(boxId){
+  uploadTargetId = boxId;
+  $('file-input').click();
+}
+
+$('file-input').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file || !uploadTargetId) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const box = $(uploadTargetId + '-box');
+    box.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = ev.target.result;
+    box.appendChild(img);
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+});
+
+function setStatus(msg){
+  $('status').textContent = msg;
+  setTimeout(()=>{ if($('status').textContent===msg) $('status').textContent=''; }, 3000);
+}
+
+function applyFormatoVisibility(){
+  const val = $('f-formato').value;
+  const rowSolo = document.querySelector('.row-solo');
+  const rowBanda = document.querySelector('.row-banda');
+  if(rowSolo) rowSolo.style.display = (val === 'banda') ? 'none' : '';
+  if(rowBanda) rowBanda.style.display = (val === 'solo') ? 'none' : '';
+}
+
+$('f-formato').addEventListener('change', applyFormatoVisibility);
+
+$('btn-insertar').addEventListener('click', () => {
+  const set = (id, val, fallback) => { const el = $(id); if(el) el.textContent = val || fallback; };
+  const destinatario = $('f-destinatario').value;
+  const contacto = $('f-contacto').value;
+  const evento = $('f-evento').value;
+  set('ph-destinatario', destinatario, '[destinatario pendiente]');
+  set('ph-destinatario-2', destinatario, '[destinatario pendiente]');
+  set('ph-contacto', contacto, '[contacto pendiente]');
+  set('ph-evento', evento, '[evento pendiente]');
+  set('ph-precio-solo', $('f-precio-solo').value, '[precio pendiente]');
+  set('ph-precio-banda', $('f-precio-banda').value, '[precio pendiente]');
+  applyFormatoVisibility();
+  setStatus('Datos insertados en el dossier ✓');
+});
+
+$('btn-pdf').addEventListener('click', () => {
+  const el = $('page');
+  const opt = {
+    margin: 0,
+    filename: 'Dossier_Diego_Castillo_' + ($('f-destinatario').value || 'propuesta').replace(/\s+/g,'_') + '.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+  setStatus('Generando PDF...');
+  html2pdf().set(opt).from(el).save().then(()=> setStatus('PDF descargado ✓'));
+});
+
+function refreshSavedList(){
+  const listEl = $('saved-list');
+  const keys = Object.keys(localStorage).filter(k => k.startsWith('dossier:'));
+  if(keys.length===0){
+    listEl.innerHTML = '<div class="saved-item"><span style="color:var(--app-muted)">Sin cotizaciones guardadas aún</span></div>';
+    return;
+  }
+  listEl.innerHTML = '';
+  keys.forEach(key => {
+    const name = key.replace('dossier:','');
+    const row = document.createElement('div');
+    row.className = 'saved-item';
+    const label = document.createElement('span');
+    label.textContent = name;
+    label.style.cursor = 'pointer';
+    label.title = 'Cargar esta cotización';
+    label.addEventListener('click', () => loadEvent(key));
+    const del = document.createElement('button');
+    del.textContent = 'eliminar';
+    del.addEventListener('click', (e) => { e.stopPropagation(); deleteEvent(key); });
+    row.appendChild(label);
+    row.appendChild(del);
+    listEl.appendChild(row);
+  });
+}
+
+$('btn-guardar').addEventListener('click', () => {
+  const name = $('f-destinatario').value.trim();
+  if(!name){
+    setStatus('Escribe el nombre del destinatario antes de guardar');
+    $('f-destinatario').focus();
+    return;
+  }
+  const data = {
+    html: $('page').innerHTML,
+    fields: {
+      formato: $('f-formato').value,
+      destinatario: $('f-destinatario').value,
+      contacto: $('f-contacto').value,
+      evento: $('f-evento').value,
+      precioSolo: $('f-precio-solo').value,
+      precioBanda: $('f-precio-banda').value
+    }
+  };
+  try{
+    localStorage.setItem('dossier:' + name, JSON.stringify(data));
+    setStatus('Cotización "' + name + '" guardada ✓');
+    refreshSavedList();
+  }catch(e){
+    setStatus('Error al guardar (¿imágenes muy pesadas para el navegador?)');
+  }
+});
+
+function loadEvent(key){
+  try{
+    const raw = localStorage.getItem(key);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    $('page').innerHTML = data.html;
+    const f = data.fields || {};
+    $('f-formato').value = f.formato || 'ambos';
+    $('f-destinatario').value = f.destinatario || '';
+    $('f-contacto').value = f.contacto || '';
+    $('f-evento').value = f.evento || '';
+    $('f-precio-solo').value = f.precioSolo || '';
+    $('f-precio-banda').value = f.precioBanda || '';
+    setStatus('Cotización cargada ✓');
+  }catch(e){
+    setStatus('Error al cargar');
+  }
+}
+
+function deleteEvent(key){
+  try{
+    localStorage.removeItem(key);
+    setStatus('Eliminado ✓');
+    refreshSavedList();
+  }catch(e){
+    setStatus('Error al eliminar');
+  }
+}
+
+refreshSavedList();
+</script>
+</body>
+</html>
