@@ -110,7 +110,7 @@
     "title": "Cool",
     "type": "Single",
     "year": "2026",
-    "label": "Nuevo lanzamiento",
+    "label": "Disponible ahora",
     "cover": "",
     "spotify": "",
     "apple": "",
@@ -184,6 +184,6 @@
   },
   "settings": {
     "maintenanceMode": false,
-    "lastUpdated": "2026-07-01T21:49:21.274Z"
+    "lastUpdated": "2026-07-17T15:23:09.591Z"
   }
 }
