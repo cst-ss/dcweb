@@ -183,7 +183,7 @@
     "formEndpoint": "https://formspree.io/f/xojokqnv"
   },
   "settings": {
-    "maintenanceMode": false,
-    "lastUpdated": "2026-07-17T15:23:09.591Z"
+    "maintenanceMode": true,
+    "lastUpdated": "2026-07-17T15:23:28.916Z"
   }
 }
